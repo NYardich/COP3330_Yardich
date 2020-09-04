@@ -4,7 +4,7 @@ public class Decrypter {
     static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
-        System.out.println(decrypt(getInput()));
+        System.out.println(decrypt(strConvert(getInput())));
     }
 
     public static String getInput() {
@@ -12,13 +12,24 @@ public class Decrypter {
         return in.next();
     }
 
-    public static String decrypt(String num) {
+    public static int[] strConvert(String num) {
+        int[] res = new int[4];
+
+        // Iterate through res
+        for(int i = 0; i < 4; i++) {
+            // Assign character i in num to digit i in res
+            res[i] = Character.getNumericValue(num.charAt(i));
+        }
+        return res;
+    }
+
+    public static String decrypt(int[] num) {
         char[] decrypted = new char[4];
 
         // Decrypt each digit
         for(int i = 0; i < 4; i++) {
             // Add to character array in correct index
-            decrypted[(i + 2) % 4] = numberUnmix(Character.getNumericValue(num.charAt(i)));
+            decrypted[(i + 2) % 4] = numberUnmix(num[i]);
         }
 
         // Return string version of character array
