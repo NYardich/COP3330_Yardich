@@ -4,7 +4,7 @@ public class Encrypter {
     static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
-        System.out.println(encrypt(strConvert(getInput())));
+        System.out.println(encrypt(getInput()));
     }
 
     public static String getInput() {
@@ -23,13 +23,14 @@ public class Encrypter {
         return res;
     }
 
-    public static String encrypt(int[] num) {
+    public static String encrypt(String num) {
+        int[] res = strConvert(num);
         char[] encrypted = new char[4];
 
         // Encrypt each digit
         for(int i = 0; i < 4; i++) {
             // Add to character array in correct index
-            encrypted[(i + 2) % 4] = numberMix(num[i]);
+            encrypted[(i + 2) % 4] = numberMix(res[i]);
         }
         // Return string version of character array
         return String.valueOf(encrypted);
