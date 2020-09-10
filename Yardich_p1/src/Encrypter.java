@@ -1,16 +1,4 @@
-import java.util.Scanner;
-
 public class Encrypter {
-    static Scanner in = new Scanner(System.in);
-
-    public static void main(String[] args) {
-        System.out.println(encrypt(getInput()));
-    }
-
-    public static String getInput() {
-        System.out.print("Number to be encrypted: ");
-        return in.next();
-    }
 
     public static int[] strConvert(String num) {
         int[] res = new int[4];

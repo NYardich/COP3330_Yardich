@@ -1,16 +1,4 @@
-import java.util.Scanner;
-
 public class Decrypter {
-    static Scanner in = new Scanner(System.in);
-
-    public static void main(String[] args) {
-        System.out.println(decrypt(getInput()));
-    }
-
-    public static String getInput() {
-        System.out.print("Number to be decrypted: ");
-        return in.next();
-    }
 
     public static int[] strConvert(String num) {
         int[] res = new int[4];
@@ -23,7 +11,7 @@ public class Decrypter {
         return res;
     }
 
-    public static String decrypt(String num) {
+    public String decrypt(String num) {
         int[] res = strConvert(num);
         char[] decrypted = new char[4];
 
