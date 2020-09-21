@@ -23,7 +23,7 @@ public class App {
         Scanner input = new Scanner(System.in);
         String response;
 
-        System.out.printf("Enter Y to continue or N to stop:\n\t> ");
+        System.out.print("Enter Y to continue or N to stop:\n\t> ");
         response = input.next();
         switch(response) {
             case "Y":
@@ -38,9 +38,9 @@ public class App {
 
     public static double getUserHeight() {
         Scanner input = new Scanner(System.in);
-        double height = 0;
+        double height;
         while(true) {
-            System.out.printf("Enter Height in Inches:\n\t> ");
+            System.out.print("Enter Height in Inches:\n\t> ");
             height = input.nextDouble();
             input.nextLine();
             if (height > 0) {
@@ -53,9 +53,9 @@ public class App {
 
     public static double getUserWeight() {
         Scanner input = new Scanner(System.in);
-        double weight = 0;
+        double weight;
         while(true) {
-            System.out.printf("Enter Weight in Pounds:\n\t> ");
+            System.out.print("Enter Weight in Pounds:\n\t> ");
             weight = input.nextDouble();
             input.nextLine();
             if (weight > 0) {
@@ -67,8 +67,7 @@ public class App {
     }
 
     public static void displayBmiInfo(BodyMassIndex bmi) {
-        System.out.printf("BMI: %.2f\n", bmi.BMIScore());
-        bmi.BMICategory();
+        System.out.printf("BMI: %.2f\nCategory: %s\n", bmi.BMIScore(), bmi.BMICategory());
     }
 
     public static void displayBmiStatistics(ArrayList<BodyMassIndex> bmi) {
