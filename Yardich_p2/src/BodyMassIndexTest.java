@@ -5,36 +5,31 @@ class BodyMassIndexTest {
 
     @Test
     void testBMIScore() {
-        BodyMassIndex user = new BodyMassIndex(100,1);
-        String res = user.BMICategory();
-        assertEquals("Underweight <= 18.5", user.BMICategory());
+        BodyMassIndex user = new BodyMassIndex(68,150);
+        assertEquals(22.80493079584775, user.BMIScore());
     }
 
     @Test
     void testBMICategoryUnderweight() {
         BodyMassIndex user = new BodyMassIndex(100,1);
-        String res = user.BMICategory();
         assertEquals("Underweight <= 18.5", user.BMICategory());
     }
 
     @Test
     void testBMICategoryNormalWeight() {
-        BodyMassIndex user = new BodyMassIndex(100,1);
-        String res = user.BMICategory();
+        BodyMassIndex user = new BodyMassIndex(68,150);
         assertEquals("Normal weight = 18.5–24.9", user.BMICategory());
     }
 
     @Test
     void testBMICategoryOverweight() {
-        BodyMassIndex user = new BodyMassIndex(100,1);
-        String res = user.BMICategory();
+        BodyMassIndex user = new BodyMassIndex(68,180);
         assertEquals("Overweight = 25–29.9", user.BMICategory());
     }
 
     @Test
     void testBMICategoryObesity() {
         BodyMassIndex user = new BodyMassIndex(1,100);
-        String res = user.BMICategory();
         assertEquals("Obesity = BMI of 30 or greater", user.BMICategory());
     }
 }
