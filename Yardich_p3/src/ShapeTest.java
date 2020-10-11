@@ -2,6 +2,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class ShapeTest {
+
     @Test
     public void testSquareName() {
         Shape shape = new Square(10);
@@ -130,7 +131,7 @@ class ShapeTest {
 
     @Test
     public void testSphereArea2() {
-        Shape3D shape = new Sphere(10.75);
+        Shape3D shape = new Sphere(0.75);
         assertEquals(7.07, shape.getArea(), 0.01);
     }
 
@@ -145,4 +146,5 @@ class ShapeTest {
         Shape3D shape = new Sphere(0.6);
         assertEquals(0.9, shape.getVolume(), 0.01);
     }
+
 }
