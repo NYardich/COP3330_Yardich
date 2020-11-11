@@ -18,6 +18,7 @@ public class App {
             try {
                 System.out.printf("1) create a new list%n2) load an existing list%n3) quit%n\t> ");
                 int response = input.nextInt();
+                input.nextLine();
                 repeat = mainMenuDecision(response);
             } catch (InputMismatchException e) {
                 System.out.println("Answer must be an integer");
@@ -34,10 +35,11 @@ public class App {
                 System.out.printf("1) view the list%n2) add an item%n3) edit an item%n4) remove an item%n5) mark an item as completed%n" +
                         "6) unmark an item as completed%n7) save the current list%n8) quit to the main menu%n\t> ");
                 int response = input.nextInt();
+                input.nextLine();
                 repeat = listOperationMenuDecision(response, current);
             } catch (InputMismatchException e) {
                 System.out.println("Answer must be an integer");
-                input.next();
+                input.nextLine();
             }
         }
     }
@@ -99,15 +101,15 @@ public class App {
         while (true) {
             try {
                 System.out.print("Task Title: ");
-                String title = input.next();
+                String title = input.nextLine();
                 System.out.print("Task Description: ");
-                String description = input.next();
+                String description = input.nextLine();
                 System.out.print("Task Due  [YYYY-MM-DD]: ");
                 LocalDate dueDate = LocalDate.parse(input.next());
                 return new TaskItem(title, description, dueDate);
             } catch (InputMismatchException | DateTimeException e) {
                 System.out.println("Incorrect input");
-                input.next();
+                input.nextLine();
             }
         }
     }
@@ -116,10 +118,11 @@ public class App {
         try {
             System.out.print("Enter the index of the task you wish to delete: ");
             int index = input.nextInt();
+            input.nextLine();
             current.deleteItem(index);
         } catch(InputMismatchException e) {
             System.out.println("Incorrect Input");
-            input.next();
+            input.nextLine();
         }
     }
 
@@ -127,10 +130,11 @@ public class App {
         try {
             System.out.print("Enter the index of the task you wish to edit: ");
             int index = input.nextInt();
+            input.nextLine();
             System.out.print("New Task Title: ");
-            String title = input.next();
+            String title = input.nextLine();
             System.out.print("New Task Description: ");
-            String description = input.next();
+            String description = input.nextLine();
             System.out.print("New Task Due  [YYYY-MM-DD]: ");
             LocalDate dueDate = LocalDate.parse(input.next());
             current.editItem(index, title, description, dueDate);
@@ -147,6 +151,7 @@ public class App {
                 case 1:
                     System.out.print("Which task will you unmark as completed? ");
                     choice = input.nextInt();
+                    input.nextLine();
                     if (current.get(choice).isCompleted()) {
                         current.get(choice).setCompleted(false);
                     } else { System.out.println("The selected index is already uncompleted."); }
@@ -154,9 +159,10 @@ public class App {
                 case 2:
                     System.out.print("Which task will you mark as completed? ");
                     choice = input.nextInt();
+                    input.nextLine();
                     if (!current.get(choice).isCompleted()) {
                         current.get(choice).setCompleted(true);
-                    } else { System.out.println("The selected index is either already completed."); }
+                    } else { System.out.println("The selected index is already completed."); }
                     break;
                 default:
                     System.out.println("completionChange: Invalid print type");
