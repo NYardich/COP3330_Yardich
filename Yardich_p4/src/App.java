@@ -127,7 +127,7 @@ public class App {
             input.nextLine();
             current.deleteItem(index);
         } catch(InputMismatchException e) {
-            System.out.println("Incorrect Input");
+            System.out.println("Index does not exist");
             input.nextLine();
         }
     }
@@ -147,6 +147,8 @@ public class App {
         } catch (InputMismatchException | DateTimeException e) {
             System.out.println("Incorrect Input");
             input.next();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Index  does not exist in this list.");
         }
     }
 

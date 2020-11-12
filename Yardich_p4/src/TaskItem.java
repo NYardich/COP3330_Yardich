@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 
 public class TaskItem {
     private String title;
@@ -9,7 +10,11 @@ public class TaskItem {
     TaskItem(String title, String description, LocalDate date) {
         this.dueDate = date;
         this.description = description;
-        this.title = title;
+        if(title.length() > 0) {
+            this.title = title;
+        } else  {
+            throw new InputMismatchException("Title must be at least one character long");
+        }
         this.completed = false;
     }
 
@@ -33,7 +38,11 @@ public class TaskItem {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        if(title.length() > 0) {
+            this.title = title;
+        } else  {
+            throw new InputMismatchException("Title must be at least one character long");
+        }
     }
 
     public String getDescription() {
