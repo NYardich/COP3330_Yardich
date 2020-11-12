@@ -55,9 +55,15 @@ public class App {
                 listOperationMenu(here);
                 return true;
             case 2:
-                TaskList file = readFile();
-                listOperationMenu(file);
-                return true;
+                try {
+                    TaskList file = readFile();
+                    listOperationMenu(file);
+                }
+                catch (FileNotFoundException e) {
+                    System.out.println("File does not exist");
+                } finally {
+                    return true;
+                }
             case 3:
                 System.out.println("Goodbye!");
                 return false;
@@ -127,8 +133,10 @@ public class App {
             input.nextLine();
             current.deleteItem(index);
         } catch(InputMismatchException e) {
-            System.out.println("Index does not exist");
+            System.out.println("Index must be an integer");
             input.nextLine();
+        } catch(IndexOutOfBoundsException e) {
+            System.out.println("Index does not exist");
         }
     }
 
@@ -185,7 +193,7 @@ public class App {
 
     private static void writeToFile(TaskList current) {
         System.out.printf("What is your desired filename? (No need for file extension)%n\t> ");
-        String filename = input.next();
+        String filename = input.nextLine();
         try(Formatter output = new Formatter(filename + ".txt")) {
             for(int i = 0; i < current.size(); i++) {
                 output.format("%s;%s;%s;%s;", current.get(i).getTitle(), current.get(i).getDescription(), current.get(i).getDueDate(), current.get(i).isCompleted());
@@ -197,26 +205,20 @@ public class App {
         }
     }
 
-    private static TaskList readFile() {
-        while(true) {
-            System.out.printf("What is the name of your file? Make sure it is .txt and within this directory%n\t> ");
-            String filename = input.nextLine();
-            try {
-                Scanner sc = new Scanner(new File(filename));
-                TaskList ret = new TaskList();
-                sc.useDelimiter(";");
-                while (sc.hasNext()) {
-                    String title = sc.next();
-                    String description = sc.next();
-                    LocalDate dueDate = LocalDate.parse(sc.next());
-                    boolean completed = Boolean.valueOf(sc.next());
-                    ret.addItem(new TaskItem(title, description, dueDate, completed));
-                }
-                System.out.printf("File Received%n");
-                return ret;
-            } catch (FileNotFoundException e) {
-                System.out.println("File does not exist");
-            }
+    private static TaskList readFile() throws FileNotFoundException{
+        System.out.printf("What is the name of your file? Make sure it is .txt and within this directory (No need for file extension)%n\t> ");
+        String filename = input.nextLine();
+        Scanner sc = new Scanner(new File(filename + ".txt"));
+        TaskList ret = new TaskList();
+        sc.useDelimiter(";");
+        while (sc.hasNext()) {
+            String title = sc.next();
+            String description = sc.next();
+            LocalDate dueDate = LocalDate.parse(sc.next());
+            boolean completed = Boolean.valueOf(sc.next());
+            ret.addItem(new TaskItem(title, description, dueDate, completed));
         }
+        System.out.printf("File Received%n");
+        return ret;
     }
 }
