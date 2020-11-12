@@ -29,4 +29,7 @@ Yardich_p2/
 Yardich_p3/
 Exam1/
 
+# File I/O
+*.txt
+
 .idea/

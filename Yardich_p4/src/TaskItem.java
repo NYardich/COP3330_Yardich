@@ -13,6 +13,13 @@ public class TaskItem {
         this.completed = false;
     }
 
+    TaskItem(String title, String description, LocalDate date, boolean completed) {
+        this.dueDate = date;
+        this.description = description;
+        this.title = title;
+        this.completed = completed;
+    }
+
     public LocalDate getDueDate() {
         return dueDate;
     }

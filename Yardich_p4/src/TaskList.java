@@ -69,4 +69,8 @@ public class TaskList {
     public TaskItem get(int index) {
         return items.get(index);
     }
+
+    public int size() {
+        return items.size();
+    }
 }

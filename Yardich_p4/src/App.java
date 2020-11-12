@@ -1,5 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.Formatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -52,6 +55,8 @@ public class App {
                 listOperationMenu(here);
                 return true;
             case 2:
+                TaskList file = readFile();
+                listOperationMenu(file);
                 return true;
             case 3:
                 System.out.println("Goodbye!");
@@ -87,6 +92,7 @@ public class App {
                 completionChange(current, 1);
                 return true;
             case 7:
+                writeToFile(current);
                 return true;
             case 8:
                 System.out.printf("Main Menu%n---------%n");
@@ -172,6 +178,43 @@ public class App {
             input.next();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Index does not exist in this list.");
+        }
+    }
+
+    private static void writeToFile(TaskList current) {
+        System.out.printf("What is your desired filename? (No need for file extension)%n\t> ");
+        String filename = input.next();
+        try(Formatter output = new Formatter(filename + ".txt")) {
+            for(int i = 0; i < current.size(); i++) {
+                output.format("%s;%s;%s;%s;", current.get(i).getTitle(), current.get(i).getDescription(), current.get(i).getDueDate(), current.get(i).isCompleted());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File cannot be found or created");
+        } catch (Exception e) {
+            System.out.println("Unknown error in File I/O");
+        }
+    }
+
+    private static TaskList readFile() {
+        while(true) {
+            System.out.printf("What is the name of your file? Make sure it is .txt and within this directory%n\t> ");
+            String filename = input.nextLine();
+            try {
+                Scanner sc = new Scanner(new File(filename));
+                TaskList ret = new TaskList();
+                sc.useDelimiter(";");
+                while (sc.hasNext()) {
+                    String title = sc.next();
+                    String description = sc.next();
+                    LocalDate dueDate = LocalDate.parse(sc.next());
+                    boolean completed = Boolean.valueOf(sc.next());
+                    ret.addItem(new TaskItem(title, description, dueDate, completed));
+                }
+                System.out.printf("File Received%n");
+                return ret;
+            } catch (FileNotFoundException e) {
+                System.out.println("File does not exist");
+            }
         }
     }
 }
