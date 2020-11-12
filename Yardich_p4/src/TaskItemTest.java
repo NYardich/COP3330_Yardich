@@ -20,39 +20,39 @@ class TaskItemTest {
     }
 
     @Test
-    public void creatingTaskItemSucceedsWithValidDueDate() {
+    public void creatingTaskItemSucceedsWithValidDueDate() throws Exception {
         TaskItem test = new TaskItem("Test", "test", LocalDate.parse("2021-01-01"));
         assertEquals(test.toString(), "[2021-01-01] Test: test");
     }
     @Test
-    public void creatingTaskItemSucceedsWithValidTitle() {
+    public void creatingTaskItemSucceedsWithValidTitle() throws Exception {
         TaskItem test = new TaskItem("Test", "test", LocalDate.parse("2021-01-01"));
         assertEquals(test.toString(), "[2021-01-01] Test: test");
     }
 
     @Test
-    public void settingTaskItemDueDateFailsWithInvalidDate() {
+    public void settingTaskItemDueDateFailsWithInvalidDate() throws Exception {
         TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2021-01-01"));
         assertThrows(DateTimeException.class, () -> {
             test.setDueDate(LocalDate.parse("2000-20-20"));
         });
     }
     @Test
-    public void settingTaskItemDueDateSucceedsWithValidDate() {
+    public void settingTaskItemDueDateSucceedsWithValidDate() throws Exception {
         TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2021-01-01"));
         test.setDueDate(LocalDate.parse("2021-02-14"));
         assertEquals(test.getDueDate().toString(),"2021-02-14");
     }
 
     @Test
-    public void settingTaskItemTitleFailsWithInvalidTitle() {
+    public void settingTaskItemTitleFailsWithInvalidTitle() throws Exception {
         TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2021-01-01"));
         assertThrows(InputMismatchException.class, () -> {
             test.setTitle("");
         });
     }
     @Test
-    public void settingTaskItemTitleSucceedsWithValidTitle() {
+    public void settingTaskItemTitleSucceedsWithValidTitle() throws Exception {
         TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2021-01-01"));
         test.setTitle("Hello");
         assertEquals(test.getTitle(),"Hello");

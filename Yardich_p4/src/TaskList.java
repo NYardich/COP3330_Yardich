@@ -44,7 +44,7 @@ public class TaskList {
         items.remove(index);
     }
 
-    public void editItem(int index, String title, String description, LocalDate dueDate) {
+    public void editItem(int index, String title, String description, LocalDate dueDate) throws Exception {
         items.get(index).setTitle(title);
         items.get(index).setDescription(description);
         items.get(index).setDueDate(dueDate);

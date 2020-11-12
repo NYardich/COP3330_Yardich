@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 class TaskListTest {
     @Test
-    public void addingTaskItemsIncreasesSize() {
+    public void addingTaskItemsIncreasesSize() throws Exception {
         TaskList test = new TaskList();
         int oldSize = test.size();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
@@ -18,7 +18,7 @@ class TaskListTest {
         assert(newSize > oldSize);
     }
     @Test
-    public void completingTaskItemChangesStatus() {
+    public void completingTaskItemChangesStatus() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         test.get(0).setCompleted(true);
@@ -32,7 +32,7 @@ class TaskListTest {
         });
     }
     @Test
-    public void editingTaskItemChangesValues() {
+    public void editingTaskItemChangesValues() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.get(0).toString(), "[2020-12-12] Test: test");
@@ -40,7 +40,7 @@ class TaskListTest {
         assertEquals(test.get(0).toString(), "[2020-12-24] test: tesT");
     }
     @Test
-    public void editingTaskItemDescriptionChangesValue() {
+    public void editingTaskItemDescriptionChangesValue() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.get(0).toString(), "[2020-12-12] Test: test");
@@ -48,7 +48,7 @@ class TaskListTest {
         assertEquals(test.get(0).toString(), "[2020-12-20] test: tesTing");
     }
     @Test
-    public void editingTaskItemDescriptionFailsWithInvalidIndex() {
+    public void editingTaskItemDescriptionFailsWithInvalidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.get(0).toString(), "[2020-12-12] Test: test");
@@ -57,7 +57,7 @@ class TaskListTest {
         });
     }
     @Test
-    public void editingTaskItemDueDateChangesValue() {
+    public void editingTaskItemDueDateChangesValue() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.get(0).toString(), "[2020-12-12] Test: test");
@@ -65,7 +65,7 @@ class TaskListTest {
         assertEquals(test.get(0).toString(), "[2020-12-20] Test: test");
     }
     @Test
-    public void editingTaskItemDueDateFailsWithInvalidIndex() {
+    public void editingTaskItemDueDateFailsWithInvalidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.get(0).toString(), "[2020-12-12] Test: test");
@@ -74,7 +74,7 @@ class TaskListTest {
         });
     }
     @Test
-    public void editingTaskItemTitleChangesValue() {
+    public void editingTaskItemTitleChangesValue() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.get(0).toString(), "[2020-12-12] Test: test");
@@ -82,7 +82,7 @@ class TaskListTest {
         assertEquals(test.get(0).toString(), "[2020-12-12] Testing: test");
     }
     @Test
-    public void editingTaskItemTitleFailsWithInvalidIndex() {
+    public void editingTaskItemTitleFailsWithInvalidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.get(0).toString(), "[2020-12-12] Test: test");
@@ -91,7 +91,7 @@ class TaskListTest {
         });
     }
     @Test
-    public void gettingTaskItemDescriptionFailsWithInvalidIndex() {
+    public void gettingTaskItemDescriptionFailsWithInvalidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertThrows(IndexOutOfBoundsException.class, () -> {
@@ -99,13 +99,13 @@ class TaskListTest {
         });
     }
     @Test
-    public void gettingTaskItemDescriptionSucceedsWithValidIndex() {
+    public void gettingTaskItemDescriptionSucceedsWithValidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.get(0).getDescription(), "test");
     }
     @Test
-    public void gettingTaskItemDueDateFailsWithInvalidIndex() {
+    public void gettingTaskItemDueDateFailsWithInvalidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertThrows(IndexOutOfBoundsException.class, () -> {
@@ -113,13 +113,13 @@ class TaskListTest {
         });
     }
     @Test
-    public void gettingTaskItemDueDateSucceedsWithValidIndex() {
+    public void gettingTaskItemDueDateSucceedsWithValidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.get(0).getDueDate(), LocalDate.parse("2020-12-12"));
     }
     @Test
-    public void gettingTaskItemTitleFailsWithInvalidIndex() {
+    public void gettingTaskItemTitleFailsWithInvalidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertThrows(IndexOutOfBoundsException.class, () -> {
@@ -127,7 +127,7 @@ class TaskListTest {
         });
     }
     @Test
-    public void gettingTaskItemTitleSucceedsWithValidIndex() {
+    public void gettingTaskItemTitleSucceedsWithValidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.get(0).getTitle(), "Test");
@@ -138,7 +138,7 @@ class TaskListTest {
         assertEquals(test.size(), 0);
     }
     @Test
-    public void removingTaskItemsDecreasesSize() {
+    public void removingTaskItemsDecreasesSize() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         int oldSize = test.size();
@@ -147,7 +147,7 @@ class TaskListTest {
         assert(oldSize > newSize);
     }
     @Test
-    public void removingTaskItemsFailsWithInvalidIndex() {
+    public void removingTaskItemsFailsWithInvalidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertThrows(IndexOutOfBoundsException.class, () -> {
@@ -155,7 +155,7 @@ class TaskListTest {
         });
     }
     @Test
-    public void savedTaskListCanBeLoaded() throws FileNotFoundException {
+    public void savedTaskListCanBeLoaded() throws FileNotFoundException, Exception{
         TaskList current = new TaskList();
         current.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         TaskList ret = new TaskList();
@@ -189,7 +189,7 @@ class TaskListTest {
         assertEquals(current.toString(), ret.toString());
     }
     @Test
-    public void uncompletingTaskItemChangesStatus() {
+    public void uncompletingTaskItemChangesStatus() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         test.get(0).setCompleted(true);
@@ -198,7 +198,7 @@ class TaskListTest {
         assertEquals(false, test.get(0).isCompleted());
     }
     @Test
-    public void uncompletingTaskItemFailsWithInvalidIndex() {
+    public void uncompletingTaskItemFailsWithInvalidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         test.get(0).setCompleted(true);

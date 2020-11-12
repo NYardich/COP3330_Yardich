@@ -25,7 +25,7 @@ public class App {
                 repeat = mainMenuDecision(response);
             } catch (InputMismatchException e) {
                 System.out.println("Answer must be an integer");
-                input.next();
+                input.nextLine();
             }
         }
     }
@@ -120,7 +120,10 @@ public class App {
                 LocalDate dueDate = LocalDate.parse(input.next());
                 return new TaskItem(title, description, dueDate);
             } catch (InputMismatchException | DateTimeException e) {
-                System.out.println("Incorrect input");
+                System.out.println("Incorrect Input");
+            }  catch (Exception e) {
+                System.out.println(e.getMessage());
+            } finally {
                 input.nextLine();
             }
         }
@@ -130,13 +133,15 @@ public class App {
         try {
             System.out.print("Enter the index of the task you wish to delete: ");
             int index = input.nextInt();
-            input.nextLine();
+            //input.nextLine();
             current.deleteItem(index);
         } catch(InputMismatchException e) {
             System.out.println("Index must be an integer");
-            input.nextLine();
+            //input.nextLine();
         } catch(IndexOutOfBoundsException e) {
             System.out.println("Index does not exist");
+        } finally {
+            input.nextLine();
         }
     }
 
@@ -154,9 +159,12 @@ public class App {
             current.editItem(index, title, description, dueDate);
         } catch (InputMismatchException | DateTimeException e) {
             System.out.println("Incorrect Input");
-            input.next();
+            input.nextLine();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Index  does not exist in this list.");
+            System.out.println("Index does not exist in this list.");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            input.nextLine();
         }
     }
 
