@@ -32,8 +32,12 @@ public class TaskItem {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
+    public void setDueDate(LocalDate dueDate) throws Exception{
+        if (dueDate.isAfter(LocalDate.now())) {
+            this.dueDate = dueDate;
+        } else {
+            throw new Exception("Due Date must be after today");
+        }
     }
 
     public String getTitle() {

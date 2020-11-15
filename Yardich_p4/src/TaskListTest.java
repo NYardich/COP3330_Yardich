@@ -60,15 +60,15 @@ class TaskListTest {
     public void editingTaskItemDueDateChangesValue() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.get(0).toString(), "[2020-12-12] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test");
         test.editItem(0, "Test", "test", LocalDate.parse("2020-12-20"));
-        assertEquals(test.get(0).toString(), "[2020-12-20] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-20] Test: test");
     }
     @Test
     public void editingTaskItemDueDateFailsWithInvalidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.get(0).toString(), "[2020-12-12] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test");
         assertThrows(IndexOutOfBoundsException.class, () -> {
             test.editItem(1, "test", "tesTing", LocalDate.parse("2020-12-20"));
         });
@@ -77,15 +77,15 @@ class TaskListTest {
     public void editingTaskItemTitleChangesValue() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.get(0).toString(), "[2020-12-12] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test");
         test.editItem(0, "Testing", "test", LocalDate.parse("2020-12-12"));
-        assertEquals(test.get(0).toString(), "[2020-12-12] Testing: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Testing: test");
     }
     @Test
     public void editingTaskItemTitleFailsWithInvalidIndex() throws Exception {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.get(0).toString(), "[2020-12-12] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test");
         assertThrows(IndexOutOfBoundsException.class, () -> {
             test.editItem(1, "Testing", "test", LocalDate.parse("2020-12-12"));
         });

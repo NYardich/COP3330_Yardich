@@ -117,14 +117,15 @@ public class App {
                 System.out.print("Task Description: ");
                 String description = input.nextLine();
                 System.out.print("Task Due  [YYYY-MM-DD]: ");
-                LocalDate dueDate = LocalDate.parse(input.next());
+                LocalDate dueDate = LocalDate.parse(input.nextLine());
                 return new TaskItem(title, description, dueDate);
-            } catch (InputMismatchException | DateTimeException e) {
-                System.out.println("Incorrect Input");
-            }  catch (Exception e) {
-                System.out.println(e.getMessage());
-            } finally {
+            } catch (InputMismatchException e) {
+                System.out.println("Incorrect Input type: Task was not created.");
                 input.nextLine();
+            } catch (DateTimeException e) {
+                System.out.println("Invalid Date: Task was not created.");
+            }  catch (Exception e) {
+                System.out.println(e.getMessage() + ": Task was not created.");
             }
         }
     }
@@ -133,11 +134,9 @@ public class App {
         try {
             System.out.print("Enter the index of the task you wish to delete: ");
             int index = input.nextInt();
-            //input.nextLine();
             current.deleteItem(index);
         } catch(InputMismatchException e) {
             System.out.println("Index must be an integer");
-            //input.nextLine();
         } catch(IndexOutOfBoundsException e) {
             System.out.println("Index does not exist");
         } finally {
@@ -155,16 +154,17 @@ public class App {
             System.out.print("New Task Description: ");
             String description = input.nextLine();
             System.out.print("New Task Due  [YYYY-MM-DD]: ");
-            LocalDate dueDate = LocalDate.parse(input.next());
+            LocalDate dueDate = LocalDate.parse(input.nextLine());
             current.editItem(index, title, description, dueDate);
-        } catch (InputMismatchException | DateTimeException e) {
-            System.out.println("Incorrect Input");
+        } catch (InputMismatchException e) {
+            System.out.println("Incorrect Input type: Task was not edited.");
             input.nextLine();
+        } catch (DateTimeException e) {
+            System.out.println("Invalid Date: Task was not edited.");
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Index does not exist in this list.");
+            System.out.println("Index does not exist in this list: Task was not edited.");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            input.nextLine();
+            System.out.println(e.getMessage() + ": Task was not edited.");
         }
     }
 

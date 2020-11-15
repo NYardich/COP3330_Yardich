@@ -12,9 +12,17 @@ class TaskItemTest {
             TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2000-20-20"));
         });
     }
+
+    @Test
+    public void creatingTaskItemFailsWithInvalidDueDate2() {
+        assertThrows(Exception.class, () -> {
+            TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2020-11-10"));
+        });
+    }
+
     @Test
     public void creatingTaskItemFailsWithInvalidTitle() {
-        assertThrows(InputMismatchException.class, () -> {
+        assertThrows(Exception.class, () -> {
             TaskItem test = new TaskItem("", "Test", LocalDate.parse("2021-01-01"));
         });
     }
@@ -37,6 +45,15 @@ class TaskItemTest {
             test.setDueDate(LocalDate.parse("2000-20-20"));
         });
     }
+
+    @Test
+    public void settingTaskItemDueDateFailsWithInvalidDate2() throws Exception {
+        TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2021-01-01"));
+        assertThrows(Exception.class, () -> {
+            test.setDueDate(LocalDate.parse("2020-11-10"));
+        });
+    }
+
     @Test
     public void settingTaskItemDueDateSucceedsWithValidDate() throws Exception {
         TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2021-01-01"));
@@ -47,7 +64,7 @@ class TaskItemTest {
     @Test
     public void settingTaskItemTitleFailsWithInvalidTitle() throws Exception {
         TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2021-01-01"));
-        assertThrows(InputMismatchException.class, () -> {
+        assertThrows(Exception.class, () -> {
             test.setTitle("");
         });
     }
