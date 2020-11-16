@@ -1,5 +1,9 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.Scanner;
 
 public class TaskList {
     private ArrayList<TaskItem> items;
@@ -65,5 +69,30 @@ public class TaskList {
             ret.append(i + ") " + items.get(i));
         }
         return ret.toString();
+    }
+
+    public void write(String filename) {
+        try(Formatter output = new Formatter(filename + ".txt")) {
+            for(int i = 0; i < this.size(); i++) {
+                output.format("%s;%s;%s;%s;", items.get(i).getTitle(), items.get(i).getDescription(), items.get(i).getDueDate(), items.get(i).isCompleted());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File cannot be found or created");
+        } catch (Exception e) {
+            System.out.println("Unknown error in File I/O");
+        }
+    }
+
+    public void read(String filename) throws FileNotFoundException {
+        Scanner sc = new Scanner(new File(filename + ".txt"));
+        sc.useDelimiter(";");
+        while (sc.hasNext()) {
+            String title = sc.next();
+            String description = sc.next();
+            LocalDate dueDate = LocalDate.parse(sc.next());
+            boolean completed = Boolean.valueOf(sc.next());
+            this.addItem(new TaskItem(title, description, dueDate, completed));
+        }
+        System.out.printf("File Received%n");
     }
 }

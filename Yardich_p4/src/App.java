@@ -202,31 +202,14 @@ public class App {
     private static void writeToFile(TaskList current) {
         System.out.printf("What is your desired filename? (No need for file extension)%n\t> ");
         String filename = input.nextLine();
-        try(Formatter output = new Formatter(filename + ".txt")) {
-            for(int i = 0; i < current.size(); i++) {
-                output.format("%s;%s;%s;%s;", current.get(i).getTitle(), current.get(i).getDescription(), current.get(i).getDueDate(), current.get(i).isCompleted());
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File cannot be found or created");
-        } catch (Exception e) {
-            System.out.println("Unknown error in File I/O");
-        }
+       current.write(filename);
     }
 
     private static TaskList readFile() throws FileNotFoundException{
         System.out.printf("What is the name of your file? Make sure it is .txt and within this directory (No need for file extension)%n\t> ");
         String filename = input.nextLine();
-        Scanner sc = new Scanner(new File(filename + ".txt"));
         TaskList ret = new TaskList();
-        sc.useDelimiter(";");
-        while (sc.hasNext()) {
-            String title = sc.next();
-            String description = sc.next();
-            LocalDate dueDate = LocalDate.parse(sc.next());
-            boolean completed = Boolean.valueOf(sc.next());
-            ret.addItem(new TaskItem(title, description, dueDate, completed));
-        }
-        System.out.printf("File Received%n");
+        ret.read(filename);
         return ret;
     }
 }
