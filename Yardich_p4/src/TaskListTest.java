@@ -160,31 +160,8 @@ class TaskListTest {
         current.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         TaskList ret = new TaskList();
 
-        // Writing to file
-        try(Formatter output = new Formatter("test.txt")) {
-            for(int i = 0; i < current.size(); i++) {
-                output.format("%s;%s;%s;%s;", current.get(i).getTitle(), current.get(i).getDescription(), current.get(i).getDueDate(), current.get(i).isCompleted());
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File cannot be found or created");
-        } catch (Exception e) {
-            System.out.println("Unknown error in File I/O");
-        }
-
-        // Reading from file
-        try {
-            Scanner sc = new Scanner(new File("test.txt"));
-            sc.useDelimiter(";");
-            while (sc.hasNext()) {
-                String title = sc.next();
-                String description = sc.next();
-                LocalDate dueDate = LocalDate.parse(sc.next());
-                boolean completed = Boolean.valueOf(sc.next());
-                ret.addItem(new TaskItem(title, description, dueDate, completed));
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File does not exist");
-        }
+        current.write("test");
+        ret.read("test");
 
         assertEquals(current.toString(), ret.toString());
     }

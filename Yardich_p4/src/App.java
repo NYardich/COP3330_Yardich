@@ -171,6 +171,8 @@ public class App {
     private static void completionChange(TaskList current, int completed) {
         try {
             int choice = 0;
+            // completed = 1: task is being unmarked
+            // completed = 2: task is being marked
             switch (completed) {
                 case 1:
                     System.out.print("Which task will you unmark as completed? ");
