@@ -1,3 +1,4 @@
+import javax.naming.NamingException;
 import java.time.LocalDate;
 
 public class TaskItem {
@@ -6,17 +7,17 @@ public class TaskItem {
     private LocalDate dueDate;
     private boolean completed;
 
-    TaskItem(String title, String description, LocalDate date) throws Exception{
+    TaskItem(String title, String description, LocalDate date) throws NamingException{
         if (date.isAfter(LocalDate.now())) {
             this.dueDate = date;
         } else {
-            throw new Exception("Due Date must be after today");
+            throw new NamingException("Due Date must be after today");
         }
         this.description = description;
         if(title.length() > 0) {
             this.title = title;
         } else  {
-            throw new Exception("Title must be at least one character long");
+            throw new NamingException("Title must be at least one character long");
         }
         this.completed = false;
     }
@@ -32,11 +33,11 @@ public class TaskItem {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) throws Exception{
+    public void setDueDate(LocalDate dueDate) throws NamingException{
         if (dueDate.isAfter(LocalDate.now())) {
             this.dueDate = dueDate;
         } else {
-            throw new Exception("Due Date must be after today");
+            throw new NamingException("Due Date must be after today");
         }
     }
 
@@ -44,11 +45,11 @@ public class TaskItem {
         return title;
     }
 
-    public void setTitle(String title) throws Exception{
+    public void setTitle(String title) throws NamingException{
         if(title.length() > 0) {
             this.title = title;
         } else  {
-            throw new Exception("Title must be at least one character long");
+            throw new NamingException("Title must be at least one character long");
         }
     }
 

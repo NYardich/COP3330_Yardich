@@ -1,3 +1,4 @@
+import javax.naming.NamingException;
 import java.io.FileNotFoundException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -122,7 +123,9 @@ public class App {
                 input.nextLine();
             } catch (DateTimeException e) {
                 System.out.println("Invalid Date: Task was not created.");
-            }  catch (Exception e) {
+            }  catch (NamingException e) {
+                System.out.println(e.getMessage() + ": Task was not created.");
+            } catch (Exception e) {
                 System.out.println(e.getMessage() + ": Task was not created.");
             }
         }
@@ -161,6 +164,8 @@ public class App {
             System.out.println("Invalid Date: Task was not edited.");
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Index does not exist in this list: Task was not edited.");
+        } catch (NamingException e) {
+            System.out.println(e.getMessage() + ": Task was not edited.");
         } catch (Exception e) {
             System.out.println(e.getMessage() + ": Task was not edited.");
         }

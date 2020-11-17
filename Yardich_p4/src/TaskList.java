@@ -1,3 +1,4 @@
+import javax.naming.NamingException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
@@ -48,7 +49,7 @@ public class TaskList {
         items.remove(index);
     }
 
-    public void editItem(int index, String title, String description, LocalDate dueDate) throws Exception {
+    public void editItem(int index, String title, String description, LocalDate dueDate) throws NamingException {
         items.get(index).setTitle(title);
         items.get(index).setDescription(description);
         items.get(index).setDueDate(dueDate);
