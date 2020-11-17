@@ -155,7 +155,7 @@ class TaskListTest {
         });
     }
     @Test
-    public void savedTaskListCanBeLoaded() throws FileNotFoundException, Exception{
+    public void savedTaskListCanBeLoaded() throws Exception{
         TaskList current = new TaskList();
         current.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         TaskList ret = new TaskList();
@@ -165,6 +165,16 @@ class TaskListTest {
 
         assertEquals(current.toString(), ret.toString());
     }
+
+    @Test
+    public void ReadingTaskListFailsWithNonexistentFile() throws Exception {
+        TaskList current = new TaskList();
+
+        assertThrows(FileNotFoundException.class, () -> {
+            current.read("!!//\\");
+        });
+    }
+
     @Test
     public void uncompletingTaskItemChangesStatus() throws Exception {
         TaskList test = new TaskList();

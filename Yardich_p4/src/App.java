@@ -1,8 +1,6 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.Formatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -207,7 +205,7 @@ public class App {
        current.write(filename);
     }
 
-    private static TaskList readFile() throws FileNotFoundException{
+    private static TaskList readFile() throws FileNotFoundException {
         System.out.printf("What is the name of your file? Make sure it is .txt and within this directory (No need for file extension)%n\t> ");
         String filename = input.nextLine();
         TaskList ret = new TaskList();

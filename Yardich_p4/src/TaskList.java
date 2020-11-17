@@ -77,9 +77,10 @@ public class TaskList {
                 output.format("%s;%s;%s;%s;", items.get(i).getTitle(), items.get(i).getDescription(), items.get(i).getDueDate(), items.get(i).isCompleted());
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File cannot be found or created");
+            System.out.println("File not found");
         } catch (Exception e) {
-            System.out.println("Unknown error in File I/O");
+            System.out.println("Unknown error in File Write");
+            e.printStackTrace();
         }
     }
 
