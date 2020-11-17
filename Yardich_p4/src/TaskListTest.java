@@ -166,6 +166,7 @@ class TaskListTest {
         assertEquals(current.toString(), ret.toString());
     }
 
+    // This test depends on there not being a file named !!//\\.txt in the home directory
     @Test
     public void ReadingTaskListFailsWithNonexistentFile() throws Exception {
         TaskList current = new TaskList();

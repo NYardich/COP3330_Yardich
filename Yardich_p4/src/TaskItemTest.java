@@ -6,13 +6,14 @@ import java.time.LocalDate;
 import java.util.InputMismatchException;
 
 class TaskItemTest {
+    // If date doesn't exist
     @Test
     public void creatingTaskItemFailsWithInvalidDueDate() {
         assertThrows(DateTimeException.class, () -> {
             TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2000-20-20"));
         });
     }
-
+    // If date is in the past
     @Test
     public void creatingTaskItemFailsWithInvalidDueDate2() {
         assertThrows(Exception.class, () -> {
@@ -38,6 +39,7 @@ class TaskItemTest {
         assertEquals(test.toString(), "[2021-01-01] Test: test");
     }
 
+    // If the date doesn't exist
     @Test
     public void settingTaskItemDueDateFailsWithInvalidDate() throws Exception {
         TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2021-01-01"));
@@ -46,6 +48,7 @@ class TaskItemTest {
         });
     }
 
+    // If the date is in the past
     @Test
     public void settingTaskItemDueDateFailsWithInvalidDate2() throws Exception {
         TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2021-01-01"));
