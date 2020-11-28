@@ -9,5 +9,4 @@ public interface ItemList<E> {
     void write(String filename);
     // All implementations of a file read method involve throwing a FileNotFoundException because of the nature of File I/O
     void read(String filename) throws FileNotFoundException;
-    E get(int index);
 }

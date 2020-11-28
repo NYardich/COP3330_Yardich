@@ -58,11 +58,6 @@ public class TaskList implements ItemList<TaskItem> {
     }
 
     @Override
-    public TaskItem get(int index) {
-        return items.get(index);
-    }
-
-    @Override
     public int size() {
         return items.size();
     }
@@ -113,5 +108,17 @@ public class TaskList implements ItemList<TaskItem> {
 
     public boolean isComplete(int index) {
         return items.get(index).isCompleted();
+    }
+
+    public String getTitle(int index) {
+        return items.get(index).getTitle();
+    }
+
+    public String getDescription(int index) {
+        return items.get(index).getDescription();
+    }
+
+    public LocalDate getDueDate(int index) {
+        return items.get(index).getDueDate();
     }
 }

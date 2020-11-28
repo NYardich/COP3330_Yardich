@@ -30,9 +30,4 @@ public class ContactList implements ItemList<ContactItem>{
     public void read(String filename) throws FileNotFoundException {
 
     }
-
-    @Override
-    public ContactItem get(int index) {
-        return items.get(index);
-    }
 }
