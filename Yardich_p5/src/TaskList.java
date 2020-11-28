@@ -75,7 +75,7 @@ public class TaskList {
     public void write(String filename) {
         try(Formatter output = new Formatter(filename + ".txt")) {
             for(int i = 0; i < this.size(); i++) {
-                output.format("%s;%s;%s;%s;", items.get(i).getTitle(), items.get(i).getDescription(), items.get(i).getDueDate(), items.get(i).isCompleted());
+                output.format("%s%n%s%n%s%n%s%n", items.get(i).getTitle(), items.get(i).getDescription(), items.get(i).getDueDate(), items.get(i).isCompleted());
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -87,12 +87,11 @@ public class TaskList {
 
     public void read(String filename) throws FileNotFoundException {
         Scanner sc = new Scanner(new File(filename + ".txt"));
-        sc.useDelimiter(";");
         while (sc.hasNext()) {
-            String title = sc.next();
-            String description = sc.next();
-            LocalDate dueDate = LocalDate.parse(sc.next());
-            boolean completed = Boolean.valueOf(sc.next());
+            String title = sc.nextLine();
+            String description = sc.nextLine();
+            LocalDate dueDate = LocalDate.parse(sc.nextLine());
+            boolean completed = Boolean.valueOf(sc.nextLine());
             this.addItem(new TaskItem(title, description, dueDate, completed));
         }
         System.out.printf("File Received%n");
