@@ -171,9 +171,7 @@ class TaskListTest {
     public void ReadingTaskListFailsWithNonexistentFile() throws NamingException {
         TaskList current = new TaskList();
 
-        assertThrows(FileNotFoundException.class, () -> {
-            current.read("!!//\\");
-        });
+        assertEquals(false, current.read("!!//\\"));
     }
 
     @Test

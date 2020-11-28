@@ -22,10 +22,17 @@ public class TaskItem {
         this.completed = false;
     }
 
-    TaskItem(String title, String description, LocalDate date, boolean completed) {
+    // This method will only be called in File I/O, since the user never immediately gives a value for completed;
+    // Because of this, there is no check for dueDate being past today, since saved lists may have dueDates which
+    // have passed since the save and these dates are an exception to the rule.
+    TaskItem(String title, String description, LocalDate date, boolean completed) throws NamingException {
         this.dueDate = date;
         this.description = description;
-        this.title = title;
+        if(title.length() > 0) {
+            this.title = title;
+        } else  {
+            throw new NamingException("Title must be at least one character long.");
+        }
         this.completed = completed;
     }
 

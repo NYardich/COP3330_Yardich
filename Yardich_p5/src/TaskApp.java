@@ -54,8 +54,8 @@ public class TaskApp {
                     TaskList file = readFile();
                     listOperationMenu(file);
                 }
-                catch (FileNotFoundException e) {
-                    System.out.println("File does not exist");
+                catch (Exception e) {
+                    System.out.println("File Read Failed.");
                 } finally {
                     return true;
                 }
@@ -206,11 +206,14 @@ public class TaskApp {
        current.write(filename);
     }
 
-    private static TaskList readFile() throws FileNotFoundException {
+    private static TaskList readFile() throws Exception {
         System.out.printf("What is the name of your file? Make sure it is .txt and within this directory (No need for file extension)%n\t> ");
         String filename = input.nextLine();
         TaskList ret = new TaskList();
-        ret.read(filename);
-        return ret;
+        if(ret.read(filename)) {
+            return ret;
+        } else {
+            throw new Exception();
+        }
     }
 }

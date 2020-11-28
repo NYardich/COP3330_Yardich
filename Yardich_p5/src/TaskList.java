@@ -78,24 +78,36 @@ public class TaskList implements ItemList<TaskItem> {
                 output.format("%s%n%s%n%s%n%s%n", items.get(i).getTitle(), items.get(i).getDescription(), items.get(i).getDueDate(), items.get(i).isCompleted());
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println("File not found.");
         } catch (Exception e) {
-            System.out.println("Unknown error in File Write");
+            System.out.println("Unknown error in File Write.");
             e.printStackTrace();
         }
     }
 
     @Override
-    public void read(String filename) throws FileNotFoundException {
-        Scanner sc = new Scanner(new File(filename + ".txt"));
-        while (sc.hasNext()) {
-            String title = sc.nextLine();
-            String description = sc.nextLine();
-            LocalDate dueDate = LocalDate.parse(sc.nextLine());
-            boolean completed = Boolean.valueOf(sc.nextLine());
-            this.addItem(new TaskItem(title, description, dueDate, completed));
+    public boolean read(String filename) {
+        try {
+            Scanner sc = new Scanner(new File(filename + ".txt"));
+            while (sc.hasNext()) {
+                String title = sc.nextLine();
+                String description = sc.nextLine();
+                LocalDate dueDate = LocalDate.parse(sc.nextLine());
+                boolean completed = Boolean.valueOf(sc.nextLine());
+                this.addItem(new TaskItem(title, description, dueDate, completed));
+            }
+            System.out.println("File Received.");
+            return true;
+        } catch (FileNotFoundException e) {
+            System.out.println("The file name was not found in this directory.");
+            return false;
+        } catch (NamingException e) {
+            System.out.println("A parameter in the file has been tampered with.");
+            return false;
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred in file I/O; It's likely that the format in which the data was saved is not supported.");
+            return false;
         }
-        System.out.printf("File Received%n");
     }
 
     public void makeComplete(int index) {
