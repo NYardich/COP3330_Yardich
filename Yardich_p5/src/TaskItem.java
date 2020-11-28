@@ -72,7 +72,7 @@ public class TaskItem {
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
-        if(completed) { ret.append("*** "); }
+        if(this.isCompleted()) { ret.append("*** "); }
         ret.append("[" + this.getDueDate() + "] " +  this.getTitle() + ": " + this.getDescription());
         return ret.toString();
     }

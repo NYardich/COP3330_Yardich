@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Scanner;
 
-public class TaskList {
+public class TaskList implements ItemList<TaskItem> {
     private ArrayList<TaskItem> items;
 
     TaskList() {
@@ -41,10 +41,12 @@ public class TaskList {
         }
     }
 
-    public void addItem(TaskItem i) {
-        items.add(i);
+    @Override
+    public void addItem(TaskItem item) {
+        items.add(item);
     }
 
+    @Override
     public void deleteItem(int index) {
         items.remove(index);
     }
@@ -55,10 +57,12 @@ public class TaskList {
         items.get(index).setDueDate(dueDate);
     }
 
+    @Override
     public TaskItem get(int index) {
         return items.get(index);
     }
 
+    @Override
     public int size() {
         return items.size();
     }
@@ -72,6 +76,7 @@ public class TaskList {
         return ret.toString();
     }
 
+    @Override
     public void write(String filename) {
         try(Formatter output = new Formatter(filename + ".txt")) {
             for(int i = 0; i < this.size(); i++) {
@@ -85,6 +90,7 @@ public class TaskList {
         }
     }
 
+    @Override
     public void read(String filename) throws FileNotFoundException {
         Scanner sc = new Scanner(new File(filename + ".txt"));
         while (sc.hasNext()) {
@@ -95,5 +101,17 @@ public class TaskList {
             this.addItem(new TaskItem(title, description, dueDate, completed));
         }
         System.out.printf("File Received%n");
+    }
+
+    public void makeComplete(int index) {
+        items.get(index).setCompleted(true);
+    }
+
+    public void makeIncomplete(int index) {
+        items.get(index).setCompleted(false);
+    }
+
+    public boolean isComplete(int index) {
+        return items.get(index).isCompleted();
     }
 }

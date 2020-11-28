@@ -177,16 +177,16 @@ public class TaskApp {
                     System.out.print("Which task will you unmark as completed? ");
                     choice = input.nextInt();
                     input.nextLine();
-                    if (current.get(choice).isCompleted()) {
-                        current.get(choice).setCompleted(false);
+                    if (current.isComplete(choice)) {
+                        current.makeIncomplete(choice);
                     } else { System.out.println("The selected index is already uncompleted."); }
                     break;
                 case 2:
                     System.out.print("Which task will you mark as completed? ");
                     choice = input.nextInt();
                     input.nextLine();
-                    if (!current.get(choice).isCompleted()) {
-                        current.get(choice).setCompleted(true);
+                    if (!current.isComplete(choice)) {
+                        current.makeComplete(choice);
                     } else { System.out.println("The selected index is already completed."); }
                     break;
                 default:
