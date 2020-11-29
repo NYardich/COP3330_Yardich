@@ -19,7 +19,7 @@ class TaskListTest {
     public void completingTaskItemChangesStatus() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        test.makeComplete(0);
+        test.setComplete(0, true);
         assertEquals(true, test.isComplete(0));
     }
 
@@ -27,7 +27,7 @@ class TaskListTest {
     public void completingTaskItemFailsWithInvalidIndex() {
         TaskList test = new TaskList();
         assertThrows(IndexOutOfBoundsException.class, () -> {
-            test.makeComplete(0);
+            test.setComplete(0, true);
         });
     }
 
@@ -178,19 +178,19 @@ class TaskListTest {
     public void uncompletingTaskItemChangesStatus() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        test.makeComplete(0);
+        test.setComplete(0, true);
         assertEquals(true, test.isComplete(0));
-        test.makeIncomplete(0);
+        test.setComplete(0, false);
         assertEquals(false, test.isComplete(0));
     }
     @Test
     public void uncompletingTaskItemFailsWithInvalidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        test.makeComplete(0);
+        test.setComplete(0, true);
         assertEquals(true, test.isComplete(0));
         assertThrows(IndexOutOfBoundsException.class, () -> {
-                test.makeIncomplete(1);
+                test.setComplete(1,false);
         });
     }
 }
