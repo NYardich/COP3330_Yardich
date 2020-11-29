@@ -4,14 +4,14 @@ public class ContactItem {
     private String phoneNumber;
     private String emailAddress;
 
-    ContactItem(String FN, String LN, String PN, String EA) throws Exception {
-        if (FN.isBlank() && LN.isBlank() && PN.isBlank() && EA.isBlank()) {
-            throw new Exception("There must be at least one parameter in the Contact");
+    ContactItem(String firstName, String lastName, String phoneNumber, String emailAddress) throws Exception {
+        if (firstName.isBlank() && lastName.isBlank() && phoneNumber.isBlank() && emailAddress.isBlank()) {
+            throw new Exception("There must be at least one parameter in the Contact.");
         }
-        this.firstName = FN;
-        this.lastName = LN;
-        this.phoneNumber = PN;
-        this.emailAddress = EA;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
     }
 
     public String getFirstName() {

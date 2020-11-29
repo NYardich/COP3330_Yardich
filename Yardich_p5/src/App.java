@@ -9,6 +9,7 @@ public class App {
         applicationChoice();
     }
 
+    // Asks user to select a sub-application
     public static void applicationChoice() {
         boolean repeat = true;
         while(repeat) {
@@ -25,13 +26,15 @@ public class App {
             }
         }
     }
+
+    // Chooses a course of action based on response to applicationChoice
     public static boolean applicationChoiceDecision(int response) {
         switch(response) {
             case 1:
                 TaskApp.mainMenu();
                 return true;
             case 2:
-
+                ContactApp.mainMenu();
                 return true;
             case 3:
                 System.out.println("Goodbye!");

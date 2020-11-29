@@ -80,8 +80,7 @@ public class TaskList implements ItemList<TaskItem> {
         } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         } catch (Exception e) {
-            System.out.println("Unknown error in File Write.");
-            e.printStackTrace();
+            System.out.println("Unknown error in File Write: " + e.getMessage());
         }
     }
 

@@ -1,7 +1,9 @@
+import javax.naming.NamingException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.Scanner;
 
 public class ContactList implements ItemList<ContactItem>{
@@ -19,6 +21,16 @@ public class ContactList implements ItemList<ContactItem>{
         items.remove(index);
     }
 
+    public void editItem(int index, String firstName, String lastName, String phoneNumber, String emailAddress) throws Exception {
+        if (firstName.isBlank() && lastName.isBlank() && phoneNumber.isBlank() && emailAddress.isBlank()) {
+            throw new Exception("There must be at least one parameter in the Contact");
+        }
+        items.get(index).setFirstName(firstName);
+        items.get(index).setLastName(lastName);
+        items.get(index).setPhoneNumber(phoneNumber);
+        items.get(index).setEmailAddress(emailAddress);
+    }
+
     @Override
     public int size() {
         return items.size();
@@ -26,7 +38,15 @@ public class ContactList implements ItemList<ContactItem>{
 
     @Override
     public void write(String filename) {
-
+        try(Formatter output = new Formatter(filename + ".txt")) {
+            for(int i = 0; i < this.size(); i++) {
+                output.format("%s%n%s%n%s%n%s%n", items.get(i).getFirstName(), items.get(i).getLastName(), items.get(i).getPhoneNumber(), items.get(i).getEmailAddress());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        } catch (Exception e) {
+            System.out.println("Unknown error in File Write: " + e.getMessage());
+        }
     }
 
     @Override
@@ -46,5 +66,14 @@ public class ContactList implements ItemList<ContactItem>{
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        for (int i = 0; i < items.size(); i++) {
+            ret.append(i + ")%n" + items.get(i) + "%n");
+        }
+        return ret.toString();
     }
 }

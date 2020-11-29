@@ -1,5 +1,3 @@
-import java.io.FileNotFoundException;
-
 // Generic interface for lists composed of items E
 public interface ItemList<E> {
 
@@ -8,4 +6,5 @@ public interface ItemList<E> {
     int size();
     void write(String filename);
     boolean read(String filename);
+
 }
