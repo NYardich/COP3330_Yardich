@@ -4,7 +4,9 @@ public class ContactItem {
     private String phoneNumber;
     private String emailAddress;
 
+    // Constructor
     ContactItem(String firstName, String lastName, String phoneNumber, String emailAddress) throws Exception {
+        // Checks if all fields are blank
         if (firstName.isBlank() && lastName.isBlank() && phoneNumber.isBlank() && emailAddress.isBlank()) {
             throw new Exception("There must be at least one parameter in the Contact.");
         }
@@ -14,11 +16,17 @@ public class ContactItem {
         this.emailAddress = emailAddress;
     }
 
+    // Setters and Getters
+    // Each setter must ensure that changing its value will not make the entire item empty
+
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName) throws Exception {
+        if (firstName.isBlank() && lastName.isBlank() && phoneNumber.isBlank() && emailAddress.isBlank()) {
+            throw new Exception("There must be at least one parameter in the Contact.");
+        }
         this.firstName = firstName;
     }
 
@@ -26,7 +34,10 @@ public class ContactItem {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName) throws Exception {
+        if (firstName.isBlank() && lastName.isBlank() && phoneNumber.isBlank() && emailAddress.isBlank()) {
+            throw new Exception("There must be at least one parameter in the Contact.");
+        }
         this.lastName = lastName;
     }
 
@@ -34,7 +45,10 @@ public class ContactItem {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) throws Exception {
+        if (firstName.isBlank() && lastName.isBlank() && phoneNumber.isBlank() && emailAddress.isBlank()) {
+            throw new Exception("There must be at least one parameter in the Contact.");
+        }
         this.phoneNumber = phoneNumber;
     }
 
@@ -42,17 +56,26 @@ public class ContactItem {
         return emailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
+    public void setEmailAddress(String emailAddress) throws Exception {
+        if (firstName.isBlank() && lastName.isBlank() && phoneNumber.isBlank() && emailAddress.isBlank()) {
+            throw new Exception("There must be at least one parameter in the Contact.");
+        }
         this.emailAddress = emailAddress;
     }
 
-    public boolean hasItems() {
-        if(this.getFirstName().isBlank() && this.getLastName().isBlank() && this.getEmailAddress().isBlank() && this.getPhoneNumber().isBlank()) {
-            return false;
+
+    // General editItem for changing all values at once
+    public void editItem(String firstName, String lastName, String phoneNumber, String emailAddress) throws Exception {
+        if (firstName.isBlank() && lastName.isBlank() && phoneNumber.isBlank() && emailAddress.isBlank()) {
+            throw new Exception("There must be at least one parameter in the Contact.");
         }
-        return true;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
     }
 
+    // Formatted String for single Contact Item
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();

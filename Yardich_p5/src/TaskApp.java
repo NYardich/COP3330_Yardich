@@ -1,5 +1,4 @@
 import javax.naming.NamingException;
-import java.io.FileNotFoundException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
@@ -9,6 +8,7 @@ public class TaskApp {
 
     static Scanner input = new Scanner(System.in);
 
+    // Starting, public menu to access other methods.
     public static void mainMenu() {
         System.out.printf("Main Menu%n---------%n");
         boolean repeat = true;
@@ -25,6 +25,7 @@ public class TaskApp {
         }
     }
 
+    // Menu to access and modify a TaskList
     private static void listOperationMenu(TaskList current) {
         boolean repeat = true;
         while (repeat) {
@@ -42,6 +43,7 @@ public class TaskApp {
         }
     }
 
+    // Deals with response to Main Menu Prompt
     private static boolean mainMenuDecision(int response) {
         switch (response) {
             case 1:
@@ -68,6 +70,7 @@ public class TaskApp {
         }
     }
 
+    // Deals with response to List Operation Menu Prompt
     private static boolean listOperationMenuDecision(int response, TaskList current) {
         switch (response) {
             case 1:
@@ -104,6 +107,7 @@ public class TaskApp {
         }
     }
 
+    // Prompts user to enter fields for new task item, then attempts to create that item
     private static TaskItem taskItemPrompt() {
         while (true) {
             try {
@@ -119,14 +123,13 @@ public class TaskApp {
                 input.nextLine();
             } catch (DateTimeException e) {
                 System.out.println("Invalid Date: Task was not created.");
-            }  catch (NamingException e) {
-                System.out.println(e.getMessage() + ": Task was not created.");
-            } catch (Exception e) {
+            }  catch (Exception e) {
                 System.out.println(e.getMessage() + ": Task was not created.");
             }
         }
     }
 
+    // Prompts user on which task to remove, then attempts to remove that task
     private static void taskListRemovePrompt(TaskList current) {
         try {
             System.out.print("Enter the index of the task you wish to delete: ");
@@ -141,6 +144,7 @@ public class TaskApp {
         }
     }
 
+    // Prompts user on which task to edit, asks for fields for that task, then attempts to edit it
     private static void taskListEditPrompt(TaskList current) {
         try {
             System.out.print("Enter the index of the task you wish to edit: ");
@@ -160,13 +164,12 @@ public class TaskApp {
             System.out.println("Invalid Date: Task was not edited.");
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Index does not exist in this list: Task was not edited.");
-        } catch (NamingException e) {
-            System.out.println(e.getMessage() + ": Task was not edited.");
         } catch (Exception e) {
             System.out.println(e.getMessage() + ": Task was not edited.");
         }
     }
 
+    // Prompts for the index to either complete or uncomplete, then attempts to make the change
     private static void completionChange(TaskList current, int completed) {
         try {
             int choice = 0;
@@ -178,7 +181,7 @@ public class TaskApp {
                     choice = input.nextInt();
                     input.nextLine();
                     if (current.isComplete(choice)) {
-                        current.makeIncomplete(choice);
+                        current.setComplete(choice, false);
                     } else { System.out.println("The selected index is already uncompleted."); }
                     break;
                 case 2:
@@ -186,7 +189,7 @@ public class TaskApp {
                     choice = input.nextInt();
                     input.nextLine();
                     if (!current.isComplete(choice)) {
-                        current.makeComplete(choice);
+                        current.setComplete(choice, true);
                     } else { System.out.println("The selected index is already completed."); }
                     break;
                 default:
@@ -200,20 +203,25 @@ public class TaskApp {
         }
     }
 
+    // Prompts user on filename to write to, then attempts to write a TaskList to that file
     private static void writeToFile(TaskList current) {
         System.out.printf("What is your desired filename? (No need for file extension)%n\t> ");
         String filename = input.nextLine();
        current.write(filename);
     }
 
+    // Prompts user on filename to read from, then attempts to create a TaskList from that file
     private static TaskList readFile() throws Exception {
         System.out.printf("What is the name of your file? Make sure it is .txt and within this directory (No need for file extension)%n\t> ");
         String filename = input.nextLine();
         TaskList ret = new TaskList();
+
+        // read returns a boolean indicating if the file read was successful or not
         if(ret.read(filename)) {
             return ret;
         } else {
-            throw new Exception();
+            // This exception indicates to the caller that it will not be receiving a Task List from the file
+            throw new Exception("File Read Failed.");
         }
     }
 }

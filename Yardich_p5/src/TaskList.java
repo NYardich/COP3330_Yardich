@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class TaskList implements ItemList<TaskItem> {
     private ArrayList<TaskItem> items;
 
+    // Constructor
     TaskList() {
         this.items = new ArrayList<>();
     }
@@ -41,36 +42,32 @@ public class TaskList implements ItemList<TaskItem> {
         }
     }
 
+    // Add Task Item in Task List
     @Override
     public void addItem(TaskItem item) {
         items.add(item);
     }
 
+    // Delete Task Item in Task List at given index
     @Override
     public void deleteItem(int index) {
         items.remove(index);
     }
 
+    // Edit Task Item at given index with given values
     public void editItem(int index, String title, String description, LocalDate dueDate) throws NamingException {
         items.get(index).setTitle(title);
         items.get(index).setDescription(description);
         items.get(index).setDueDate(dueDate);
     }
 
+    // Return size of Task List
     @Override
     public int size() {
         return items.size();
     }
 
-    @Override
-    public String toString() {
-        StringBuilder ret = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            ret.append(i + ") " + items.get(i));
-        }
-        return ret.toString();
-    }
-
+    // Write Contact List to File
     @Override
     public void write(String filename) {
         try(Formatter output = new Formatter(filename + ".txt")) {
@@ -84,6 +81,7 @@ public class TaskList implements ItemList<TaskItem> {
         }
     }
 
+    // Read Contact List from File
     @Override
     public boolean read(String filename) {
         try {
@@ -109,13 +107,21 @@ public class TaskList implements ItemList<TaskItem> {
         }
     }
 
-    public void makeComplete(int index) {
-        items.get(index).setCompleted(true);
+    // Formatted String for list of Task Items
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        for (int i = 0; i < items.size(); i++) {
+            ret.append(i + ") " + items.get(i));
+        }
+        return ret.toString();
     }
 
-    public void makeIncomplete(int index) {
-        items.get(index).setCompleted(false);
-    }
+    // setComplete exists because a TaskItem in a TaskList can have its Completion state set outside of edit
+
+    public void setComplete(int index, boolean completion) { items.get(index).setCompleted(completion); }
+
+    // Simple getters with indexes, allowing Users to find values at indexes without being able to edit them
 
     public boolean isComplete(int index) {
         return items.get(index).isCompleted();

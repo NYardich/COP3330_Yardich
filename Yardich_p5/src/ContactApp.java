@@ -1,6 +1,3 @@
-import javax.naming.NamingException;
-import java.time.DateTimeException;
-import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -158,7 +155,7 @@ public class ContactApp {
         }
     }
 
-    // Prompts user on filename to write to, then attempts to write a contactList to that file
+    // Prompts user on filename to write to, then attempts to write a ContactList to that file
     private static void writeToFile(ContactList current) {
         System.out.printf("What is your desired filename? (No need for file extension)%n\t> ");
         String filename = input.nextLine();
@@ -170,10 +167,13 @@ public class ContactApp {
         System.out.printf("What is the name of your file? Make sure it is .txt and within this directory (No need for file extension)%n\t> ");
         String filename = input.nextLine();
         ContactList ret = new ContactList();
+
+        // read returns a boolean indicating if the file read was successful or not
         if(ret.read(filename)) {
             return ret;
         } else {
-            throw new Exception();
+            // This exception indicates to the caller that it will not be receiving a Contact List from the file
+            throw new Exception("File Read Failed.");
         }
     }
 }

@@ -7,45 +7,45 @@ public class TaskItem {
     private LocalDate dueDate;
     private boolean completed;
 
-    TaskItem(String title, String description, LocalDate date) throws NamingException{
-        if (date.isAfter(LocalDate.now())) {
-            this.dueDate = date;
-        } else {
-            throw new NamingException("Due Date must be after today");
+    // Constructors
+
+    TaskItem(String title, String description, LocalDate date) throws NamingException {
+        if(title.isBlank()) {
+            throw new NamingException("Title must be at least one character long.");
         }
+        if (!date.isAfter(LocalDate.now())) {
+            throw new NamingException("Due Date must be after today.");
+        }
+        this.title = title;
         this.description = description;
-        if(title.length() > 0) {
-            this.title = title;
-        } else  {
-            throw new NamingException("Title must be at least one character long");
-        }
+        this.dueDate = date;
         this.completed = false;
     }
 
-    // This method will only be called in File I/O, since the user never immediately gives a value for completed;
-    // Because of this, there is no check for dueDate being past today, since saved lists may have dueDates which
-    // have passed since the save and these dates are an exception to the rule.
+    // This constructor will only be called in File I/O, since the user never immediately gives a value for completed;
+    // Because of this, there is no check for dueDate being past today, since saved dueDates which
+    // have passed since the save are allowed.
     TaskItem(String title, String description, LocalDate date, boolean completed) throws NamingException {
-        this.dueDate = date;
-        this.description = description;
-        if(title.length() > 0) {
-            this.title = title;
-        } else  {
+        if(title.isBlank()) {
             throw new NamingException("Title must be at least one character long.");
         }
+        this.dueDate = date;
+        this.description = description;
+        this.title = title;
         this.completed = completed;
     }
+
+    // Setters and Getters
 
     public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) throws NamingException{
-        if (dueDate.isAfter(LocalDate.now())) {
-            this.dueDate = dueDate;
-        } else {
-            throw new NamingException("Due Date must be after today");
+    public void setDueDate(LocalDate dueDate) throws NamingException {
+        if (!dueDate.isAfter(LocalDate.now())) {
+            throw new NamingException("Due Date must be after today.");
         }
+        this.dueDate = dueDate;
     }
 
     public String getTitle() {
@@ -53,11 +53,10 @@ public class TaskItem {
     }
 
     public void setTitle(String title) throws NamingException{
-        if(title.length() > 0) {
-            this.title = title;
-        } else  {
-            throw new NamingException("Title must be at least one character long");
+        if(title.isBlank()) {
+            throw new NamingException("Title must be at least one character long.");
         }
+        this.title = title;
     }
 
     public String getDescription() {
@@ -76,6 +75,7 @@ public class TaskItem {
         this.completed = completed;
     }
 
+    // Formatted String for single Contact Item
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
