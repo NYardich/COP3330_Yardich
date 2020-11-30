@@ -35,23 +35,23 @@ class TaskListTest {
     public void editingTaskItemChangesValues() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.toString(), "0) [2020-12-12] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
         test.editItem(0, "test", "tesT", LocalDate.parse("2020-12-24"));
-        assertEquals(test.toString(), "0) [2020-12-24] test: tesT");
+        assertEquals(test.toString(), "0) [2020-12-24] test: tesT%n");
     }
     @Test
     public void editingTaskItemDescriptionChangesValue() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.toString(), "0) [2020-12-12] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
         test.editItem(0, "test", "tesTing", LocalDate.parse("2020-12-20"));
-        assertEquals(test.toString(), "0) [2020-12-20] test: tesTing");
+        assertEquals(test.toString(), "0) [2020-12-20] test: tesTing%n");
     }
     @Test
     public void editingTaskItemDescriptionFailsWithInvalidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.toString(), "0) [2020-12-12] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
         assertThrows(IndexOutOfBoundsException.class, () -> {
             test.editItem(1, "test", "tesTing", LocalDate.parse("2020-12-20"));
         });
@@ -60,15 +60,15 @@ class TaskListTest {
     public void editingTaskItemDueDateChangesValue() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.toString(), "0) [2020-12-12] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
         test.editItem(0, "Test", "test", LocalDate.parse("2020-12-20"));
-        assertEquals(test.toString(), "0) [2020-12-20] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-20] Test: test%n");
     }
     @Test
     public void editingTaskItemDueDateFailsWithInvalidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.toString(), "0) [2020-12-12] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
         assertThrows(IndexOutOfBoundsException.class, () -> {
             test.editItem(1, "test", "tesTing", LocalDate.parse("2020-12-20"));
         });
@@ -77,15 +77,15 @@ class TaskListTest {
     public void editingTaskItemTitleChangesValue() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.toString(), "0) [2020-12-12] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
         test.editItem(0, "Testing", "test", LocalDate.parse("2020-12-12"));
-        assertEquals(test.toString(), "0) [2020-12-12] Testing: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Testing: test%n");
     }
     @Test
     public void editingTaskItemTitleFailsWithInvalidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.toString(), "0) [2020-12-12] Test: test");
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
         assertThrows(IndexOutOfBoundsException.class, () -> {
             test.editItem(1, "Testing", "test", LocalDate.parse("2020-12-12"));
         });
