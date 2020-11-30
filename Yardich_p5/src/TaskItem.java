@@ -27,7 +27,7 @@ public class TaskItem {
     // have passed since the save are allowed.
     TaskItem(String title, String description, LocalDate date, boolean completed) throws NamingException {
         if(title.isBlank()) {
-            throw new NamingException("Title must be at least one character long.");
+            throw new NamingException("Title must be at least one character long");
         }
         this.dueDate = date;
         this.description = description;
@@ -43,7 +43,7 @@ public class TaskItem {
 
     public void setDueDate(LocalDate dueDate) throws NamingException {
         if (!dueDate.isAfter(LocalDate.now())) {
-            throw new NamingException("Due Date must be after today.");
+            throw new NamingException("Due Date must be after today");
         }
         this.dueDate = dueDate;
     }
@@ -54,7 +54,7 @@ public class TaskItem {
 
     public void setTitle(String title) throws NamingException{
         if(title.isBlank()) {
-            throw new NamingException("Title must be at least one character long.");
+            throw new NamingException("Title must be at least one character long");
         }
         this.title = title;
     }

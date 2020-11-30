@@ -1,11 +1,8 @@
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class TaskApp extends ListApplication<TaskList, TaskItem> {
-
-    static Scanner input = new Scanner(System.in);
 
     // Starting, public menu to access other methods.
     public void mainMenu() {
@@ -73,26 +70,26 @@ public class TaskApp extends ListApplication<TaskList, TaskItem> {
     protected boolean listOperationMenuDecision(int response, TaskList current) {
         switch (response) {
             case 1:
-                current.printList(0);
+                System.out.printf("%nCurrent Tasks%n-------------%n" + current.toString());
                 return true;
             case 2:
                 current.addItem(addPrompt());
                 return true;
             case 3:
-                current.printList(0);
+                System.out.printf("%nCurrent Tasks%n-------------%n" + current.toString());
                 editPrompt(current);
                 return true;
             case 4:
-                current.printList(0);
+                System.out.printf("%nCurrent Tasks%n-------------%n" + current.toString());
                 removePrompt(current);
                 return true;
             case 5:
-                current.printList(2);
-                completionChange(current, 2);
+                System.out.printf("%nCurrent Tasks%n-------------%n" + current.toString());
+                completeItem(current);
                 return true;
             case 6:
-                current.printList(1);
-                completionChange(current, 1);
+                System.out.printf("%nCurrent Tasks%n-------------%n" + current.toString());
+                uncompleteItem(current);
                 return true;
             case 7:
                 writeToFile(current);
@@ -116,6 +113,7 @@ public class TaskApp extends ListApplication<TaskList, TaskItem> {
                 String description = input.nextLine();
                 System.out.print("Task Due  [YYYY-MM-DD]: ");
                 LocalDate dueDate = LocalDate.parse(input.nextLine());
+
                 return new TaskItem(title, description, dueDate);
             } catch (InputMismatchException e) {
                 System.out.println("Incorrect Input type: Task was not created.");
@@ -133,6 +131,7 @@ public class TaskApp extends ListApplication<TaskList, TaskItem> {
         try {
             System.out.print("Enter the index of the task you wish to delete: ");
             int index = input.nextInt();
+
             current.deleteItem(index);
         } catch(InputMismatchException e) {
             System.out.println("Index must be an integer");
@@ -155,6 +154,7 @@ public class TaskApp extends ListApplication<TaskList, TaskItem> {
             String description = input.nextLine();
             System.out.print("New Task Due  [YYYY-MM-DD]: ");
             LocalDate dueDate = LocalDate.parse(input.nextLine());
+
             current.editItem(index, title, description, dueDate);
         } catch (InputMismatchException e) {
             System.out.println("Incorrect Input type: Task was not edited.");
@@ -168,34 +168,38 @@ public class TaskApp extends ListApplication<TaskList, TaskItem> {
         }
     }
 
-    // Prompts for the index to either complete or uncomplete, then attempts to make the change
-    protected void completionChange(TaskList current, int completed) {
+    // Attempts to mark the item at the index as completed
+    protected void completeItem(TaskList current) {
         try {
-            int choice = 0;
-            // completed = 1: task is being unmarked
-            // completed = 2: task is being marked
-            switch (completed) {
-                case 1:
-                    System.out.print("Which task will you unmark as completed? ");
-                    choice = input.nextInt();
-                    input.nextLine();
-                    if (current.isComplete(choice)) {
-                        current.setComplete(choice, false);
-                    } else { System.out.println("The selected index is already uncompleted."); }
-                    break;
-                case 2:
-                    System.out.print("Which task will you mark as completed? ");
-                    choice = input.nextInt();
-                    input.nextLine();
-                    if (!current.isComplete(choice)) {
-                        current.setComplete(choice, true);
-                    } else { System.out.println("The selected index is already completed."); }
-                    break;
-                default:
-                    System.out.println("completionChange: Invalid print type");
+            System.out.print("Which task will you mark as completed? ");
+            int choice = input.nextInt();
+            input.nextLine();
+            if (!current.isComplete(choice)) {
+                current.setComplete(choice, true);
+            } else {
+                System.out.println("The selected index is already completed.");
             }
         } catch(InputMismatchException e) {
-            System.out.println("Incorrect Input");
+            System.out.println("Index must be an integer.");
+            input.next();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Index does not exist in this list.");
+        }
+    }
+
+    // Attempts to mark the item at the index as uncompleted
+    protected void uncompleteItem(TaskList current) {
+        try {
+            System.out.print("Which task will you unmark as completed? ");
+            int choice = input.nextInt();
+            input.nextLine();
+            if (current.isComplete(choice)) {
+                current.setComplete(choice, false);
+            } else {
+                System.out.println("The selected index is already uncompleted.");
+            }
+        } catch(InputMismatchException e) {
+            System.out.println("Index must be an integer.");
             input.next();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Index does not exist in this list.");

@@ -1,8 +1,6 @@
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class ContactApp extends ListApplication<ContactList, ContactItem> {
-    static Scanner input = new Scanner(System.in);
 
     // Starting, public menu to access other methods.
     public void mainMenu() {
@@ -103,8 +101,9 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
                 String lastName = input.nextLine();
                 System.out.print("Phone number (xxx-xxx-xxxx): ");
                 String phoneNumber = input.nextLine();
-                System.out.print("Email address (x@y.z) : ");
+                System.out.print("Email address (x@y.z): ");
                 String emailAddress = input.nextLine();
+
                 return new ContactItem(firstName, lastName, phoneNumber, emailAddress);
             } catch (InputMismatchException e) {
                 System.out.println("Incorrect Input type: Contact was not created.");
@@ -120,6 +119,7 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
         try {
             System.out.print("Enter the index of the contact you wish to delete: ");
             int index = input.nextInt();
+
             current.deleteItem(index);
         } catch(InputMismatchException e) {
             System.out.println("Index must be an integer.");
@@ -144,6 +144,7 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
             String phoneNumber = input.nextLine();
             System.out.printf("Enter a new email address (x@y.z) for contact %d: ", index);
             String emailAddress = input.nextLine();
+
             current.editItem(index, firstName, lastName, phoneNumber, emailAddress);
         } catch (InputMismatchException e) {
             System.out.println("Incorrect Input type: Task was not edited.");

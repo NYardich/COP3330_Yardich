@@ -14,34 +14,6 @@ public class TaskList implements ItemList<TaskItem> {
         this.items = new ArrayList<>();
     }
 
-    // 0: print everything, 1: print completed, 2: print uncompleted
-    public void printList(int completed) {
-        System.out.printf("%nCurrent Tasks%n-------------%n");
-        switch(completed) {
-            case 0:
-                for (int i = 0; i < items.size(); i++) {
-                    System.out.println(i + ") " + items.get(i));
-                }
-                break;
-            case 1:
-                for (int i = 0; i < items.size(); i++) {
-                    if(items.get(i).isCompleted()) {
-                        System.out.println(i + ") " + items.get(i));
-                    }
-                }
-                break;
-            case 2:
-                for (int i = 0; i < items.size(); i++) {
-                    if(!items.get(i).isCompleted()) {
-                        System.out.println(i + ") " + items.get(i));
-                    }
-                }
-                break;
-            default:
-                System.out.println("Print Mode Undefined");
-        }
-    }
-
     // Add Task Item in Task List
     @Override
     public void addItem(TaskItem item) {
@@ -112,7 +84,7 @@ public class TaskList implements ItemList<TaskItem> {
     public String toString() {
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
-            ret.append(i + ") " + items.get(i));
+            ret.append(i + ") " + items.get(i) + "%n");
         }
         return ret.toString();
     }

@@ -1,4 +1,7 @@
+import java.util.Scanner;
+
 public abstract class ListApplication<E, T> {
+    static Scanner input = new Scanner(System.in);
 
     public abstract void mainMenu();
     protected abstract boolean mainMenuDecision(int response);
