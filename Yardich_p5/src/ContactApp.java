@@ -1,14 +1,14 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class ContactApp {
+public class ContactApp extends ListApplication<ContactList, ContactItem> {
     static Scanner input = new Scanner(System.in);
 
     // Starting, public menu to access other methods.
-    public static void mainMenu() {
-        System.out.printf("Main Menu%n---------%n");
+    public void mainMenu() {
         boolean repeat = true;
         while (repeat) {
+            System.out.printf("Main Menu%n---------%n");
             try {
                 System.out.printf("1) create a new list%n2) load an existing list%n3) quit%n\t> ");
                 int response = input.nextInt();
@@ -22,7 +22,7 @@ public class ContactApp {
     }
 
     // Menu to access and modify a ContactList
-    private static void listOperationMenu(ContactList current) {
+    protected void listOperationMenu(ContactList current) {
         boolean repeat = true;
         while (repeat) {
             System.out.printf("%nList Operation Menu%n---------%n");
@@ -39,7 +39,7 @@ public class ContactApp {
     }
 
     // Deals with response to Main Menu Prompt
-    private static boolean mainMenuDecision(int response) {
+    protected boolean mainMenuDecision(int response) {
         switch (response) {
             case 1:
                 ContactList here = new ContactList();
@@ -66,21 +66,21 @@ public class ContactApp {
     }
 
     // Deals with response to List Operation Menu Prompt
-    private static boolean listOperationMenuDecision(int response, ContactList current) {
+    protected boolean listOperationMenuDecision(int response, ContactList current) {
         switch (response) {
             case 1:
                 System.out.printf("%nCurrent Tasks%n-------------%n" + current.toString());
                 return true;
             case 2:
-                current.addItem(contactItemPrompt());
+                current.addItem(addPrompt());
                 return true;
             case 3:
                 System.out.printf("%nCurrent Tasks%n-------------%n" + current.toString());
-                contactListEditPrompt(current);
+                editPrompt(current);
                 return true;
             case 4:
                 System.out.printf("%nCurrent Tasks%n-------------%n" + current.toString());
-                contactListRemovePrompt(current);
+                removePrompt(current);
                 return true;
             case 5:
                 writeToFile(current);
@@ -94,7 +94,7 @@ public class ContactApp {
     }
 
     // Prompts user to enter fields for new contact item, then attempts to create that item
-    private static ContactItem contactItemPrompt() {
+    protected ContactItem addPrompt() {
         while (true) {
             try {
                 System.out.print("First name: ");
@@ -116,7 +116,7 @@ public class ContactApp {
     }
 
     // Prompts user on which contact to remove, then attempts to remove that contact
-    private static void contactListRemovePrompt(ContactList current) {
+    protected void removePrompt(ContactList current) {
         try {
             System.out.print("Enter the index of the contact you wish to delete: ");
             int index = input.nextInt();
@@ -131,7 +131,7 @@ public class ContactApp {
     }
 
     // Prompts user on which contact to edit, asks for fields for that contact, then attempts to edit it
-    private static void contactListEditPrompt(ContactList current) {
+    protected void editPrompt(ContactList current) {
         try {
             System.out.print("Enter the index of the task you wish to edit: ");
             int index = input.nextInt();
@@ -156,14 +156,14 @@ public class ContactApp {
     }
 
     // Prompts user on filename to write to, then attempts to write a ContactList to that file
-    private static void writeToFile(ContactList current) {
+    protected void writeToFile(ContactList current) {
         System.out.printf("What is your desired filename? (No need for file extension)%n\t> ");
         String filename = input.nextLine();
         current.write(filename);
     }
 
     // Prompts user on filename to read from, then attempts to create a ContactList from that file
-    private static ContactList readFile() throws Exception {
+    protected ContactList readFile() throws Exception {
         System.out.printf("What is the name of your file? Make sure it is .txt and within this directory (No need for file extension)%n\t> ");
         String filename = input.nextLine();
         ContactList ret = new ContactList();

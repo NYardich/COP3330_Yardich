@@ -31,10 +31,12 @@ public class App {
     public static boolean applicationChoiceDecision(int response) {
         switch(response) {
             case 1:
-                TaskApp.mainMenu();
+                TaskApp tasks = new TaskApp();
+                tasks.mainMenu();
                 return true;
             case 2:
-                ContactApp.mainMenu();
+                ContactApp contacts = new ContactApp();
+                contacts.mainMenu();
                 return true;
             case 3:
                 System.out.println("Goodbye!");

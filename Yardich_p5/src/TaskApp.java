@@ -1,18 +1,17 @@
-import javax.naming.NamingException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class TaskApp {
+public class TaskApp extends ListApplication<TaskList, TaskItem> {
 
     static Scanner input = new Scanner(System.in);
 
     // Starting, public menu to access other methods.
-    public static void mainMenu() {
-        System.out.printf("Main Menu%n---------%n");
+    public void mainMenu() {
         boolean repeat = true;
         while (repeat) {
+            System.out.printf("Main Menu%n---------%n");
             try {
                 System.out.printf("1) create a new list%n2) load an existing list%n3) quit%n\t> ");
                 int response = input.nextInt();
@@ -26,7 +25,7 @@ public class TaskApp {
     }
 
     // Menu to access and modify a TaskList
-    private static void listOperationMenu(TaskList current) {
+    protected void listOperationMenu(TaskList current) {
         boolean repeat = true;
         while (repeat) {
             System.out.printf("%nList Operation Menu%n---------%n");
@@ -44,7 +43,7 @@ public class TaskApp {
     }
 
     // Deals with response to Main Menu Prompt
-    private static boolean mainMenuDecision(int response) {
+    protected boolean mainMenuDecision(int response) {
         switch (response) {
             case 1:
                 TaskList here = new TaskList();
@@ -71,21 +70,21 @@ public class TaskApp {
     }
 
     // Deals with response to List Operation Menu Prompt
-    private static boolean listOperationMenuDecision(int response, TaskList current) {
+    protected boolean listOperationMenuDecision(int response, TaskList current) {
         switch (response) {
             case 1:
                 current.printList(0);
                 return true;
             case 2:
-                current.addItem(taskItemPrompt());
+                current.addItem(addPrompt());
                 return true;
             case 3:
                 current.printList(0);
-                taskListEditPrompt(current);
+                editPrompt(current);
                 return true;
             case 4:
                 current.printList(0);
-                taskListRemovePrompt(current);
+                removePrompt(current);
                 return true;
             case 5:
                 current.printList(2);
@@ -108,7 +107,7 @@ public class TaskApp {
     }
 
     // Prompts user to enter fields for new task item, then attempts to create that item
-    private static TaskItem taskItemPrompt() {
+    protected TaskItem addPrompt() {
         while (true) {
             try {
                 System.out.print("Task Title: ");
@@ -130,7 +129,7 @@ public class TaskApp {
     }
 
     // Prompts user on which task to remove, then attempts to remove that task
-    private static void taskListRemovePrompt(TaskList current) {
+    protected void removePrompt(TaskList current) {
         try {
             System.out.print("Enter the index of the task you wish to delete: ");
             int index = input.nextInt();
@@ -145,7 +144,7 @@ public class TaskApp {
     }
 
     // Prompts user on which task to edit, asks for fields for that task, then attempts to edit it
-    private static void taskListEditPrompt(TaskList current) {
+    protected void editPrompt(TaskList current) {
         try {
             System.out.print("Enter the index of the task you wish to edit: ");
             int index = input.nextInt();
@@ -170,7 +169,7 @@ public class TaskApp {
     }
 
     // Prompts for the index to either complete or uncomplete, then attempts to make the change
-    private static void completionChange(TaskList current, int completed) {
+    protected void completionChange(TaskList current, int completed) {
         try {
             int choice = 0;
             // completed = 1: task is being unmarked
@@ -204,14 +203,14 @@ public class TaskApp {
     }
 
     // Prompts user on filename to write to, then attempts to write a TaskList to that file
-    private static void writeToFile(TaskList current) {
+    protected void writeToFile(TaskList current) {
         System.out.printf("What is your desired filename? (No need for file extension)%n\t> ");
         String filename = input.nextLine();
        current.write(filename);
     }
 
     // Prompts user on filename to read from, then attempts to create a TaskList from that file
-    private static TaskList readFile() throws Exception {
+    protected TaskList readFile() throws Exception {
         System.out.printf("What is the name of your file? Make sure it is .txt and within this directory (No need for file extension)%n\t> ");
         String filename = input.nextLine();
         TaskList ret = new TaskList();
