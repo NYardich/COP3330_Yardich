@@ -15,6 +15,8 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
             } catch (InputMismatchException e) {
                 System.out.println("Answer must be an integer");
                 input.nextLine();
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -32,6 +34,8 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
             } catch (InputMismatchException e) {
                 System.out.println("Answer must be an integer");
                 input.nextLine();
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -125,6 +129,8 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
             System.out.println("Index must be an integer.");
         } catch(IndexOutOfBoundsException e) {
             System.out.println("Index does not exist.");
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + ": Task was not deleted.");
         } finally {
             input.nextLine();
         }

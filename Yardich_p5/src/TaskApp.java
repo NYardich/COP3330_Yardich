@@ -17,6 +17,8 @@ public class TaskApp extends ListApplication<TaskList, TaskItem> {
             } catch (InputMismatchException e) {
                 System.out.println("Answer must be an integer");
                 input.nextLine();
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -35,6 +37,8 @@ public class TaskApp extends ListApplication<TaskList, TaskItem> {
             } catch (InputMismatchException e) {
                 System.out.println("Answer must be an integer");
                 input.nextLine();
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -137,6 +141,8 @@ public class TaskApp extends ListApplication<TaskList, TaskItem> {
             System.out.println("Index must be an integer");
         } catch(IndexOutOfBoundsException e) {
             System.out.println("Index does not exist");
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + ": Task was not deleted.");
         } finally {
             input.nextLine();
         }
@@ -148,11 +154,11 @@ public class TaskApp extends ListApplication<TaskList, TaskItem> {
             System.out.print("Enter the index of the task you wish to edit: ");
             int index = input.nextInt();
             input.nextLine();
-            System.out.print("New Task Title: ");
+            System.out.printf("Enter a new Task Title for task %d: ", index);
             String title = input.nextLine();
-            System.out.print("New Task Description: ");
+            System.out.printf("Enter a new Task Description for task %d: ", index);
             String description = input.nextLine();
-            System.out.print("New Task Due  [YYYY-MM-DD]: ");
+            System.out.printf("Enter a new Task Due Date [YYYY-MM-DD]: ", index);
             LocalDate dueDate = LocalDate.parse(input.nextLine());
 
             current.editItem(index, title, description, dueDate);
@@ -184,6 +190,8 @@ public class TaskApp extends ListApplication<TaskList, TaskItem> {
             input.next();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Index does not exist in this list.");
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + ": Task was not completed.");
         }
     }
 
@@ -203,6 +211,8 @@ public class TaskApp extends ListApplication<TaskList, TaskItem> {
             input.next();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Index does not exist in this list.");
+        } catch(Exception e) {
+            System.out.println(e.getMessage() + ": Task was not unmarked as completed.");
         }
     }
 
