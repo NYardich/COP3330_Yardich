@@ -3,6 +3,7 @@ import java.util.InputMismatchException;
 public class ContactApp extends ListApplication<ContactList, ContactItem> {
 
     // Starting, public menu to access other methods.
+    @Override
     public void mainMenu() {
         boolean repeat = true;
         while (repeat) {
@@ -22,6 +23,7 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
     }
 
     // Menu to access and modify a ContactList
+    @Override
     protected void listOperationMenu(ContactList current) {
         boolean repeat = true;
         while (repeat) {
@@ -41,6 +43,7 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
     }
 
     // Deals with response to Main Menu Prompt
+    @Override
     protected boolean mainMenuDecision(int response) {
         switch (response) {
             case 1:
@@ -68,6 +71,7 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
     }
 
     // Deals with response to List Operation Menu Prompt
+    @Override
     protected boolean listOperationMenuDecision(int response, ContactList current) {
         switch (response) {
             case 1:
@@ -96,6 +100,7 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
     }
 
     // Prompts user to enter fields for new contact item, then attempts to create that item
+    @Override
     protected ContactItem addPrompt() {
         while (true) {
             try {
@@ -119,6 +124,7 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
     }
 
     // Prompts user on which contact to remove, then attempts to remove that contact
+    @Override
     protected void removePrompt(ContactList current) {
         try {
             System.out.print("Enter the index of the contact you wish to delete: ");
@@ -137,6 +143,7 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
     }
 
     // Prompts user on which contact to edit, asks for fields for that contact, then attempts to edit it
+    @Override
     protected void editPrompt(ContactList current) {
         try {
             System.out.print("Enter the index of the task you wish to edit: ");
@@ -163,6 +170,7 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
     }
 
     // Prompts user on filename to write to, then attempts to write a ContactList to that file
+    @Override
     protected void writeToFile(ContactList current) {
         System.out.printf("What is your desired filename? (No need for file extension)%n\t> ");
         String filename = input.nextLine();
@@ -170,6 +178,7 @@ public class ContactApp extends ListApplication<ContactList, ContactItem> {
     }
 
     // Prompts user on filename to read from, then attempts to create a ContactList from that file
+    @Override
     protected ContactList readFile() throws Exception {
         System.out.printf("What is the name of your file? Make sure it is .txt and within this directory (No need for file extension)%n\t> ");
         String filename = input.nextLine();
