@@ -34,7 +34,8 @@ public class ContactItem {
         return emailAddress;
     }
 
-    // General editItem for changing all values at once
+    // General editItem for changing all values at once:
+    // It is not necessary to ever edit just one of the parameters in the current application, hence one "editItem" method
     public void editItem(String firstName, String lastName, String phoneNumber, String emailAddress) throws Exception {
         if (!hasSomething(firstName, lastName, phoneNumber, emailAddress)) {
             throw new Exception("There must be at least one parameter in the Contact.");
