@@ -24,7 +24,7 @@ class TaskItemTest {
     @Test
     public void creatingTaskItemFailsWithInvalidTitle() {
         assertThrows(NamingException.class, () -> {
-            TaskItem test = new TaskItem("", "Test", LocalDate.parse("2021-01-01"));
+            TaskItem test = new TaskItem(" ", "Test", LocalDate.parse("2021-01-01"));
         });
     }
 
@@ -68,7 +68,7 @@ class TaskItemTest {
     public void settingTaskItemTitleFailsWithInvalidTitle() throws NamingException {
         TaskItem test = new TaskItem("Test", "Test", LocalDate.parse("2021-01-01"));
         assertThrows(NamingException.class, () -> {
-            test.setTitle("");
+            test.setTitle(" ");
         });
     }
     @Test

@@ -1,7 +1,4 @@
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -19,7 +16,7 @@ public class ContactListTest {
         ContactList test = new ContactList();
         test.addItem(new ContactItem("Test", "test", "111-111-1111", "x@y.z"));
         assertThrows(Exception.class, () -> {
-            test.editItem(0, "", "", "", "");
+            test.editItem(0, " ", " ", " ", " ");
         });
     }
     @Test
@@ -34,23 +31,23 @@ public class ContactListTest {
     public void editingSucceedsWithBlankFirstName() throws Exception {
         ContactList test = new ContactList();
         test.addItem(new ContactItem("Test", "test", "111-111-1111", "x@y.z"));
-        assertDoesNotThrow(() -> test.editItem(0, "", "test", "111-111-1111", "x@y.z"));
-        assertEquals(test.toString(), "0)%nName:  test%nPhone: 111-111-1111%nEmail: x@y.z%n");
+        assertDoesNotThrow(() -> test.editItem(0, " ", "test", "111-111-1111", "x@y.z"));
+        assertEquals(test.toString(), "0)%nName:   test%nPhone: 111-111-1111%nEmail: x@y.z%n");
 
     }
     @Test
     public void editingSucceedsWithBlankLastName() throws Exception {
         ContactList test = new ContactList();
         test.addItem(new ContactItem("Test", "test", "111-111-1111", "x@y.z"));
-        assertDoesNotThrow(() -> test.editItem(0, "Test", "", "111-111-1111", "x@y.z"));
-        assertEquals(test.toString(), "0)%nName: Test %nPhone: 111-111-1111%nEmail: x@y.z%n");
+        assertDoesNotThrow(() -> test.editItem(0, "Test", " ", "111-111-1111", "x@y.z"));
+        assertEquals(test.toString(), "0)%nName: Test  %nPhone: 111-111-1111%nEmail: x@y.z%n");
     }
     @Test
     public void editingSucceedsWithBlankPhone() throws Exception {
         ContactList test = new ContactList();
         test.addItem(new ContactItem("Test", "test", "111-111-1111", "x@y.z"));
-        assertDoesNotThrow(() -> test.editItem(0, "Test", "test", "", "x@y.z"));
-        assertEquals(test.toString(), "0)%nName: Test test%nPhone: %nEmail: x@y.z%n");
+        assertDoesNotThrow(() -> test.editItem(0, "Test", "test", " ", "x@y.z"));
+        assertEquals(test.toString(), "0)%nName: Test test%nPhone:  %nEmail: x@y.z%n");
     }
     @Test
     public void editingSucceedsWithNonBlankValues() throws Exception {
