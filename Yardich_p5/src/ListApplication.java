@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+// abstract class for applications based around ItemLists; used by ContactApp and TaskApp
 public abstract class ListApplication<E, T> {
     static Scanner input = new Scanner(System.in);
 
@@ -12,7 +13,7 @@ public abstract class ListApplication<E, T> {
     protected abstract void editPrompt(E current);
     protected abstract void writeToFile(E current);
 
-    // All readFile variants should throw an exception, since they can all fail
+    // All readFile variants should throw an exception, to signal to callers if File I/O fails
     protected abstract E readFile() throws Exception;
 
 }

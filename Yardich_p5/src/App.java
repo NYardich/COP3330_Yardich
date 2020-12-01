@@ -1,6 +1,7 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+// RUN THIS: This App ties together both ContactApp and TaskApp into one Application
 public class App {
 
     static Scanner input = new Scanner(System.in);
