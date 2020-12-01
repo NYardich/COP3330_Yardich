@@ -3,11 +3,14 @@ import org.junit.jupiter.api.Test;
 
 import javax.naming.NamingException;
 import java.io.FileNotFoundException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 
 class TaskListTest {
+
+    /*          Basics            */
     @Test
-    public void addingTaskItemsIncreasesSize() throws NamingException {
+    public void addingItemsIncreasesSize() throws NamingException {
         TaskList test = new TaskList();
         int oldSize = test.size();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
@@ -15,6 +18,13 @@ class TaskListTest {
         assert (newSize > oldSize);
     }
 
+    @Test
+    public void newListIsEmpty() {
+        TaskList test = new TaskList();
+        assertEquals(test.size(), 0);
+    }
+
+    /*          Completing      */
     @Test
     public void completingTaskItemChangesStatus() throws NamingException {
         TaskList test = new TaskList();
@@ -31,6 +41,7 @@ class TaskListTest {
         });
     }
 
+    /*    Editing      */
     @Test
     public void editingTaskItemChangesValues() throws NamingException {
         TaskList test = new TaskList();
@@ -39,16 +50,9 @@ class TaskListTest {
         test.editItem(0, "test", "tesT", LocalDate.parse("2020-12-24"));
         assertEquals(test.toString(), "0) [2020-12-24] test: tesT%n");
     }
+                // Description
     @Test
-    public void editingTaskItemDescriptionChangesValue() throws NamingException {
-        TaskList test = new TaskList();
-        test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
-        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
-        test.editItem(0, "test", "tesTing", LocalDate.parse("2020-12-20"));
-        assertEquals(test.toString(), "0) [2020-12-20] test: tesTing%n");
-    }
-    @Test
-    public void editingTaskItemDescriptionFailsWithInvalidIndex() throws NamingException {
+    public void editingItemDescriptionFailsWithInvalidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
@@ -57,11 +61,20 @@ class TaskListTest {
         });
     }
     @Test
-    public void editingTaskItemDueDateChangesValue() throws NamingException {
+    public void editingItemDescriptionSucceedsWithExpectedValue() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
-        test.editItem(0, "Test", "test", LocalDate.parse("2020-12-20"));
+        assertDoesNotThrow(() -> test.editItem(0, "test", "tesTing", LocalDate.parse("2020-12-20")));
+        assertEquals(test.toString(), "0) [2020-12-20] test: tesTing%n");
+    }
+                // Due Date
+    @Test
+    public void editingItemDueDateSucceedsWithExpectedValue() throws NamingException {
+        TaskList test = new TaskList();
+        test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
+        assertDoesNotThrow(() -> test.editItem(0, "Test", "test", LocalDate.parse("2020-12-20")));
         assertEquals(test.toString(), "0) [2020-12-20] Test: test%n");
     }
     @Test
@@ -74,11 +87,39 @@ class TaskListTest {
         });
     }
     @Test
-    public void editingTaskItemTitleChangesValue() throws NamingException {
+    public void editingTaskItemDueDateFailsWithInvalidDateFormat() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
-        test.editItem(0, "Testing", "test", LocalDate.parse("2020-12-12"));
+        assertThrows(DateTimeException.class, () -> {
+            test.editItem(0, "test", "tesTing", LocalDate.parse("Bread"));
+        });
+    }
+    @Test
+    public void editingTaskItemDueDateFailsWithInvalidYYYYMMDD() throws NamingException {
+        TaskList test = new TaskList();
+        test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
+        assertThrows(DateTimeException.class, () -> {
+            test.editItem(0, "test", "tesTing", LocalDate.parse("2020-12-40"));
+        });
+    }
+    @Test
+    public void editingTaskItemDueDateFailsWithInvalidDueDate() throws NamingException {
+        TaskList test = new TaskList();
+        test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
+        assertThrows(NamingException.class, () -> {
+            test.editItem(0, "test", "tesTing", LocalDate.parse("2020-09-09"));
+        });
+    }
+                // Title
+    @Test
+    public void editingItemTitleSucceedsWithExpectedValue() throws NamingException {
+        TaskList test = new TaskList();
+        test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
+        assertDoesNotThrow(() -> test.editItem(0, "Testing", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.toString(), "0) [2020-12-12] Testing: test%n");
     }
     @Test
@@ -91,7 +132,28 @@ class TaskListTest {
         });
     }
     @Test
-    public void gettingTaskItemDescriptionFailsWithInvalidIndex() throws NamingException {
+    public void editingTaskItemTitleFailsWithEmptyString() throws NamingException {
+        TaskList test = new TaskList();
+        test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
+        assertThrows(NamingException.class, () -> {
+            test.editItem(0, "", "test", LocalDate.parse("2020-12-12"));
+        });
+    }
+    @Test
+    public void editingTaskItemTitleFailsWithBlankString() throws NamingException {
+        TaskList test = new TaskList();
+        test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
+        assertEquals(test.toString(), "0) [2020-12-12] Test: test%n");
+        assertThrows(NamingException.class, () -> {
+            test.editItem(0, " ", "test", LocalDate.parse("2020-12-12"));
+        });
+    }
+
+    /*      Getters        */
+                // Description
+    @Test
+    public void gettingItemDescriptionFailsWithInvalidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertThrows(IndexOutOfBoundsException.class, () -> {
@@ -99,13 +161,14 @@ class TaskListTest {
         });
     }
     @Test
-    public void gettingTaskItemDescriptionSucceedsWithValidIndex() throws NamingException {
+    public void gettingItemDescriptionSucceedsWithValidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.getDescription(0), "test");
     }
+                // Due Date
     @Test
-    public void gettingTaskItemDueDateFailsWithInvalidIndex() throws NamingException {
+    public void gettingItemDueDateFailsWithInvalidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertThrows(IndexOutOfBoundsException.class, () -> {
@@ -113,13 +176,14 @@ class TaskListTest {
         });
     }
     @Test
-    public void gettingTaskItemDueDateSucceedsWithValidIndex() throws NamingException {
+    public void gettingItemDueDateSucceedsWithValidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.getDueDate(0), LocalDate.parse("2020-12-12"));
     }
+                // Title
     @Test
-    public void gettingTaskItemTitleFailsWithInvalidIndex() throws NamingException {
+    public void gettingItemTitleFailsWithInvalidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertThrows(IndexOutOfBoundsException.class, () -> {
@@ -127,18 +191,15 @@ class TaskListTest {
         });
     }
     @Test
-    public void gettingTaskItemTitleSucceedsWithValidIndex() throws NamingException {
+    public void gettingItemTitleSucceedsWithValidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertEquals(test.getTitle(0), "Test");
     }
+
+    /*      Removing        */
     @Test
-    public void newTaskListIsEmpty() {
-        TaskList test = new TaskList();
-        assertEquals(test.size(), 0);
-    }
-    @Test
-    public void removingTaskItemsDecreasesSize() throws NamingException {
+    public void removingItemsDecreasesSize() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         int oldSize = test.size();
@@ -147,13 +208,15 @@ class TaskListTest {
         assert(oldSize > newSize);
     }
     @Test
-    public void removingTaskItemsFailsWithInvalidIndex() throws NamingException {
+    public void removingItemsFailsWithInvalidIndex() throws NamingException {
         TaskList test = new TaskList();
         test.addItem(new TaskItem("Test", "test", LocalDate.parse("2020-12-12")));
         assertThrows(IndexOutOfBoundsException.class, () -> {
             test.deleteItem(1);
         });
     }
+
+    /*       Saving/Loading           */
     @Test
     public void savedTaskListCanBeLoaded() throws NamingException, FileNotFoundException {
         TaskList current = new TaskList();
@@ -174,6 +237,8 @@ class TaskListTest {
         assertEquals(false, current.read("!!//\\"));
     }
 
+
+    /*              Uncompleting            */
     @Test
     public void uncompletingTaskItemChangesStatus() throws NamingException {
         TaskList test = new TaskList();
